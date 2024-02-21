@@ -448,16 +448,19 @@
       POST "http://localhost:5000/CommerceRequestRouter/requestItem"
     </h4>
     <p>Requests an item from the store.</p>
-    <pre><code>{
-"UserId": "UIRJ2J8QZKQ4",
-"Location": [40.7128,-74.0060],
-"Orders": {
-"ST1234":["IT1234"]
-},
-"CostPrice": 50.00,
-"Status": "Pending",
-"AdditionalNotes": "Please deliver before 5 PM."
-}</code></pre>
+    <pre><code>
+        {
+            "UserId": "UIRJ2J8QZKQ4",
+            "Location": [13.113715408791111, 80.21668124172232],
+            "Orders": {
+            "SIE6SEP0E262":{"ITJDATUDHR2M":2}
+            },
+            "CostPrice": 4022,
+            "DiscountPrice":500, (optional)
+            "Status": "Pending",
+            "AdditionalNotes": "Please deliver before 5 PM."
+            }
+</code></pre>
     <p><strong>Response:</strong></p>
     <pre><code>{
 "message": "Request saved successfully.",

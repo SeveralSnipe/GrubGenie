@@ -52,7 +52,7 @@ RegisterRouter.post("/registerUser", async (req, res) => {
           PhoneNumber: PhoneNumber
         };
         await UserRef.set(data);
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "success" , UserId: UserId });
     } catch (error) {
       console.error("Error authenticating user:", error);
       res.status(500).json({ error: "Internal Server Error" });

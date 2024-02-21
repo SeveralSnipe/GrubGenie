@@ -19,7 +19,7 @@ CommerceRequestRouter.post("/requestItem", async (req, res) => {
           Location : geoPoint,
           Orders: requestData.Orders,
           CostPrice: requestData.CostPrice,
-          DiscountPrice: null,
+          DiscountPrice: requestData.DiscountPrice || 0,
           Status: 'Pending',
           AdditionalNotes: [requestData.AdditionalNotes] || []
         };
