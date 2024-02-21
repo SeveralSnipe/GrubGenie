@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:grub_genie/chatbot_button.dart';
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  bool isChatbotMinimized = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +75,15 @@ class _RegistrationState extends State<Registration> {
                     fontSize: 16,
                   ),
                 ),
+              ),
+              ChatbotButton(
+                onPressed: () {
+                  // Handle the chatbot button press
+                  // You can implement the logic to open/minimize the chatbot here
+                  setState(() {
+                    isChatbotMinimized = !isChatbotMinimized;
+                  });
+                },
               ),
             ],
           ),

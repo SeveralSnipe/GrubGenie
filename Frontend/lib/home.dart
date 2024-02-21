@@ -6,6 +6,7 @@ import 'package:grub_genie/requestfood.dart';
 import 'package:grub_genie/login.dart';
 import 'package:grub_genie/registration.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:grub_genie/chatbot_button.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isChatbotMinimized = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -134,6 +136,15 @@ class _HomeState extends State<Home> {
               fontSize: 16,
             ),
           ),
+        ),
+        ChatbotButton(
+          onPressed: () {
+            // Handle the chatbot button press
+            // You can implement the logic to open/minimize the chatbot here
+            setState(() {
+              isChatbotMinimized = !isChatbotMinimized;
+            });
+          },
         ),
       ],
     );
