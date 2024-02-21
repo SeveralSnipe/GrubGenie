@@ -1,12 +1,23 @@
 import 'dart:convert';
+import 'package:geolocator/geolocator.dart';
 import 'package:grub_genie/Api code/models/nearfood.dart';
 import 'package:http/http.dart' as http;
 
 class NearFoodApi {
   Future<NearFood?> getNearFood() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    Position currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+        forceAndroidLocationManager: true);
     Map data = {
-      "location": [80, 80],
-      "maxDist": 10000,
+      "location": [currentPosition.latitude, currentPosition.longitude],
+      "maxDist": 1000000,
       "sorts": "dist"
     };
     var body = jsonEncode(data);

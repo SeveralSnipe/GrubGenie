@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:grub_genie/models.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,18 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodListState extends State<FoodList> {
+  // late LocationPermission permission;
+  // Position currentPosition = Position(
+  //     longitude: 0,
+  //     latitude: 1,
+  //     timestamp: DateTime(0),
+  //     accuracy: 0,
+  //     altitude: 0,
+  //     altitudeAccuracy: 0,
+  //     heading: 0,
+  //     headingAccuracy: 0,
+  //     speed: 0,
+  //     speedAccuracy: 0);
   NearFood? nearFood;
   bool isLoaded = false;
   List<FoodCard> cardList = [];
@@ -43,6 +56,24 @@ class _FoodListState extends State<FoodList> {
   }
 
   Future<void> loadNearFood() async {
+    // permission = await Geolocator.checkPermission();
+    // if (permission == LocationPermission.denied) {
+    //   permission = await Geolocator.requestPermission();
+    //   if (permission == LocationPermission.denied) {
+    //     return Future.error('Location permissions are denied');
+    //   }
+    // }
+    // Geolocator.getCurrentPosition(
+    //         desiredAccuracy: LocationAccuracy.best,
+    //         forceAndroidLocationManager: true)
+    //     .then((Position position) {
+    //   setState(() {
+    //     currentPosition = position;
+    //   });
+    // }).catchError((e) {
+    //   print(e);
+    // });
+    // print(currentPosition.latitude);
     final nearFoodService = NearFoodService();
     nearFood = await nearFoodService.getNearFood();
     for (var result in nearFood!.result) {
