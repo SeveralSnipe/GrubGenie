@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FoodCard extends StatefulWidget {
   final String item;
-  final int price;
+  final int? price;
   final String store;
   final String expiry;
-  final int mrp;
+  final int? mrp;
 
   const FoodCard(
       {super.key,

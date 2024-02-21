@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grub_genie/apiplayground.dart';
 import 'package:grub_genie/nearfood.dart';
 import 'package:grub_genie/requestfood.dart';
 import 'package:grub_genie/login.dart';
@@ -107,6 +108,27 @@ class _HomeState extends State<Home> {
           ),
           child: Text(
             "Registration",
+            style: GoogleFonts.josefinSans(
+              color: Colors.black87,
+              fontSize: 16,
+            ),
+          ),
+        ),
+        const Padding(padding: EdgeInsets.all(30)),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    child: const ApiTest(),
+                    type: PageTransitionType.rightToLeft,
+                    duration: const Duration(milliseconds: 700)));
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
+          ),
+          child: Text(
+            "Test",
             style: GoogleFonts.josefinSans(
               color: Colors.black87,
               fontSize: 16,
