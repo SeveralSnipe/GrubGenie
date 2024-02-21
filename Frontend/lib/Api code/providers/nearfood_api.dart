@@ -17,7 +17,7 @@ class NearFoodApi {
         forceAndroidLocationManager: true);
     Map data = {
       "location": [currentPosition.latitude, currentPosition.longitude],
-      "maxDist": 1000000,
+      "maxDist": 10000,
       "sorts": "dist"
     };
     var body = jsonEncode(data);

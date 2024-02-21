@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:grub_genie/Api code/providers/nearfood_api.dart';
 import 'Api code/models/nearfood.dart';
 import 'Api code/service/nearfood_service.dart';
+import 'chatbot_button.dart';
 import 'foodcard.dart';
 
 // List<Widget> cardList = [
@@ -110,24 +111,32 @@ class _FoodListState extends State<FoodList> {
                       onSearch: (value) {
                         myFoodProvider.searched(value);
                       }),
-                  body: Container(
-                      alignment: Alignment.topCenter,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 148, 221, 255),
-                            Color.fromARGB(255, 177, 158, 180)
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                  body: Stack(alignment: Alignment.center, children: [
+                    Container(
+                        alignment: Alignment.topCenter,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 148, 221, 255),
+                              Color.fromARGB(255, 177, 158, 180)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                         ),
-                      ),
-                      child: ListView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: myFoodProvider.cardList.length,
-                          itemBuilder: ((context, index) {
-                            return myFoodProvider.cardList[index];
-                          }))));
+                        child: ListView.builder(
+                            padding: const EdgeInsets.only(top: 10),
+                            itemCount: myFoodProvider.cardList.length,
+                            itemBuilder: ((context, index) {
+                              return myFoodProvider.cardList[index];
+                            }))),
+                    ChatbotButton(
+                      onPressed: () {
+                        // Handle the chatbot button press
+                        // You can implement the logic to open/minimize the chatbot here
+                      },
+                    ),
+                  ]));
             }))
         : const CircularProgressIndicator();
   }

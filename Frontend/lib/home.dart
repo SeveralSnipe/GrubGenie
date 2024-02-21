@@ -19,123 +19,128 @@ class _HomeState extends State<Home> {
   bool isChatbotMinimized = false;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Text(
-          "GrubGenie",
-          style: GoogleFonts.oswald(color: Colors.black, fontSize: 40),
-        ),
-        const Padding(padding: EdgeInsets.all(30)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    child: const FoodList(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "GrubGenie",
+              style: GoogleFonts.oswald(color: Colors.black, fontSize: 40),
+            ),
+            const Padding(padding: EdgeInsets.all(30)),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const FoodList(),
+                        type: PageTransitionType.rightToLeft,
+                        duration: const Duration(milliseconds: 700)));
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
+              ),
+              child: Text(
+                "Food Near Me",
+                style: GoogleFonts.josefinSans(
+                  color: Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(5)),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: const RequestFood(),
                     type: PageTransitionType.rightToLeft,
-                    duration: const Duration(milliseconds: 700)));
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Food Near Me",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const Padding(padding: EdgeInsets.all(5)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: const RequestFood(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 700),
+                    duration: const Duration(milliseconds: 700),
+                  ),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
               ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Request Food",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const Padding(padding: EdgeInsets.all(5)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: const Login(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 700),
+              child: Text(
+                "Request Food",
+                style: GoogleFonts.josefinSans(
+                  color: Colors.black87,
+                  fontSize: 16,
+                ),
               ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Login",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
             ),
-          ),
-        ),
-        const Padding(padding: EdgeInsets.all(5)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: const Registration(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 700),
-              ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Registration",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const Padding(padding: EdgeInsets.all(30)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    child: const ApiTest(),
+            const Padding(padding: EdgeInsets.all(5)),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: const Login(),
                     type: PageTransitionType.rightToLeft,
-                    duration: const Duration(milliseconds: 700)));
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Test",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
+                    duration: const Duration(milliseconds: 700),
+                  ),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
+              ),
+              child: Text(
+                "Login",
+                style: GoogleFonts.josefinSans(
+                  color: Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
             ),
-          ),
+            const Padding(padding: EdgeInsets.all(5)),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: const Registration(),
+                    type: PageTransitionType.rightToLeft,
+                    duration: const Duration(milliseconds: 700),
+                  ),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
+              ),
+              child: Text(
+                "Registration",
+                style: GoogleFonts.josefinSans(
+                  color: Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(30)),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const ApiTest(),
+                        type: PageTransitionType.rightToLeft,
+                        duration: const Duration(milliseconds: 700)));
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
+              ),
+              child: Text(
+                "Test",
+                style: GoogleFonts.josefinSans(
+                  color: Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
         ),
         ChatbotButton(
           onPressed: () {

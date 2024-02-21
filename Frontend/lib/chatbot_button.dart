@@ -7,9 +7,8 @@ class ChatbotButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 16.0,
-      right: 16.0,
+    return Align(
+      alignment: const Alignment(0.9, 0.9),
       child: FloatingActionButton(
         onPressed: () => onPressed(),
         child: const Icon(Icons.chat),
