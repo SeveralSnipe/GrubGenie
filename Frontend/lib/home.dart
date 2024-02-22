@@ -7,6 +7,7 @@ import 'package:grub_genie/login.dart';
 import 'package:grub_genie/registration.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:grub_genie/chatbot_button.dart';
+import 'package:grub_genie/food_item_registration.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -134,6 +135,32 @@ class _HomeState extends State<Home> {
               ),
               child: Text(
                 "Test",
+                style: GoogleFonts.josefinSans(
+                  color: Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(30)),
+            // ... Existing buttons ...
+
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to FoodItemRegistration page
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: const FoodItemRegistration(),
+                    type: PageTransitionType.rightToLeft,
+                    duration: const Duration(milliseconds: 700),
+                  ),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.blue.shade300),
+              ),
+              child: Text(
+                "Register Food Item",
                 style: GoogleFonts.josefinSans(
                   color: Colors.black87,
                   fontSize: 16,
