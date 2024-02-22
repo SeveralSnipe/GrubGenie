@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const RegisterRouter = express.Router();
 const { auth, db, admin } = require("../db");
 const { haversine,generateRandomString,validateEmail } = require("../helper");
+const bcrypt = require('bcrypt');
+
 RegisterRouter.use(bodyParser.json());
 
 
@@ -44,12 +46,15 @@ RegisterRouter.post("/registerUser", async (req, res) => {
         const Email = validateEmail(body.Email) ? body.Email : null;
         const UserId = 'UI' + generateRandomString(10); 
         const UserRef = db.collection('UserDetails').doc(UserId); // Reference to the document
+        const password = body.Password;
+        const hashedPassword = await bcrypt.hash(password, 10);
         const data = {
           UserId: UserId,
           UserName: UserName,
           DOB: DOB,
           Email: Email,
-          PhoneNumber: PhoneNumber
+          PhoneNumber: PhoneNumber,
+          password: hashedPassword
         };
         await UserRef.set(data);
         res.status(200).json({ message: "success" , UserId: UserId });
