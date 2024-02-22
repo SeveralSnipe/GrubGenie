@@ -110,7 +110,8 @@
   "GST": "1234567890",
   "Email": "example@store.com",
   "Location": [12.34, 56.78],
-  "PhoneNumber": "1234567890"
+  "PhoneNumber": "1234567890",
+  "Password":"123abc"
 }</code></pre>
     <p>response is store id</p>
     <h3>Register User</h3>
@@ -121,9 +122,32 @@
   "UserName": "John Doe",
   "DOB": "1990-01-01",
   "Email": "john@example.com",
-  "PhoneNumber": "1234567890"
+  "PhoneNumber": "1234567890",
+  "Password":"123abc"
 }</code></pre>
-    <p>response is userid</p>
+    <p>response is userid OR StoreId</p>
+
+    <h2>Login Routes</h2>
+
+    <h3>Login Store</h3>
+
+    <h4 class="post">POST "/LoginRouter/loginStore"</h4>
+    <p>Logs in a store.</p>
+    <pre><code>{
+  "Identifer":"email or storeid"
+  "Password":"123abc"
+}</code></pre>
+    <p>response is store id</p>
+    <h3>login User</h3>
+
+    <h4 class="post">POST "/LoginRouter/loginUser"</h4>
+    <p>Logs in a user.</p>
+    <pre><code>{
+        "Identifer":"email or userid"
+        "Password":"123abc"
+}</code></pre>
+    <p>response is userid OR StoreId</p>
+
     <h2>CommerceNearMeRoutes</h2>
 
     <h3>CommerceNearMeRouter</h3>
