@@ -20,13 +20,16 @@ RegisterRouter.post("/registerStore", async (req, res) => {
         const StoreId = 'SI' + generateRandomString(10); 
         const geoPoint = new admin.firestore.GeoPoint(Location[0], Location[1]);
         const RegisterRef = db.collection('StoreDetails').doc(StoreId); // Reference to the document
+        const password = body.Password;
+        const hashedPassword = await bcrypt.hash(password, 10);
         const data = {
           StoreId: StoreId,
           StoreName: StoreName,
           GST: GST,
           Email: Email,
           Location: geoPoint,
-          PhoneNumber: PhoneNumber
+          PhoneNumber: PhoneNumber,
+          password: hashedPassword
         };
         await RegisterRef.set(data);
         res.status(200).json({ message: "success" , StoreId : StoreId});

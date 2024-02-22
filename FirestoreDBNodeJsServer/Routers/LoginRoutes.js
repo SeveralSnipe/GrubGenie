@@ -34,5 +34,31 @@ LoginRouter.post("/loginUser", async (req, res) => {
     }
 });
 
+
+LoginRouter.post("/loginStore", async (req, res) => {
+    try {
+        const { Identifier, Password } = req.body;
+        let querySnapshot;
+        if (Identifier.includes('@')) {
+            querySnapshot = await db.collection('StoreDetails').where('Email', '==', Identifier).get();
+        } else {
+            querySnapshot = await db.collection('StoreDetails').where('StoreDetails', '==', Identifier).get();
+        }
+        if (querySnapshot.empty) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        const StoreData = querySnapshot.docs[0].data();
+        console.log(StoreData.password,Password)
+        const passwordMatch = await bcrypt.compare(Password,StoreData.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+        const token = jwt.sign({ StoreId: StoreData.StoreId }, process.env.JWT_SECRET, { expiresIn: '12h' });
+        res.status(200).json({ message: "success", token:token });
+    } catch (error) {
+        console.error("Error authenticating user:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 module.exports = LoginRouter;
 
