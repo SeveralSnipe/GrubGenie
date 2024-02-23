@@ -54,10 +54,7 @@ class _ApiTestState extends State<ApiTest> {
                 alignment: Alignment.topCenter,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
-                      Color.fromARGB(255, 148, 221, 255),
-                      Color.fromARGB(255, 177, 158, 180)
-                    ],
+                    colors: [Colors.blue, Colors.lightBlue],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
