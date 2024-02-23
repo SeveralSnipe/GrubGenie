@@ -8,7 +8,7 @@ class RegisterStoreService {
     required String storeName,
     required String gst,
     required String email,
-    required String location,
+    required List<double> location,
     required String phoneNumber,
     required String password,
   }) async {

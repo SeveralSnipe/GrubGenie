@@ -256,13 +256,12 @@ class _RegistrationState extends State<Registration> {
                             print("User registration failed");
                           }
                         } else if (registrationType == 2) {
-                          // Store registration logic
                           final result =
                               await RegisterStoreService().registerStore(
                             storeName: storeNameController.text,
                             gst: gstController.text,
                             email: emailController.text,
-                            location: locationController.text,
+                            location: [13.113715408791111, 80.21668124172232],
                             phoneNumber: storePhoneNumberController.text,
                             password: passwordController.text,
                           );
