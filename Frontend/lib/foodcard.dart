@@ -30,6 +30,7 @@ class _FoodCardState extends State<FoodCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
+      color: Colors.white.withOpacity(0.7),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

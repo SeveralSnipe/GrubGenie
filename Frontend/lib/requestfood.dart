@@ -57,7 +57,7 @@ class _RequestFoodState extends State<RequestFood> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     inputDecorationTheme: InputDecorationTheme(
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.5),
+                      fillColor: Colors.white.withOpacity(0.7),
                     ),
                     initialSelection: selectedFoodItem,
                     label: Text(
@@ -193,7 +193,7 @@ class _RequestFoodState extends State<RequestFood> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.5)),
+                        fillColor: Colors.white.withOpacity(0.7)),
                     maxLines: 3,
                     onChanged: (value) {
                       setState(() {
@@ -210,7 +210,7 @@ class _RequestFoodState extends State<RequestFood> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.5)),
+                        fillColor: Colors.white.withOpacity(0.7)),
                     onChanged: (value) {
                       setState(() {
                         location = value;
@@ -226,7 +226,7 @@ class _RequestFoodState extends State<RequestFood> {
                         fontSize: 16,
                       ),
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.5),
+                      fillColor: Colors.white.withOpacity(0.7),
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
