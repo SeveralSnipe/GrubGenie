@@ -22,7 +22,7 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Food Item Registration"),
+        title: const Text("Food Item Registration"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
