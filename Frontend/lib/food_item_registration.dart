@@ -23,7 +23,7 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Food Item Registration"),
-          backgroundColor: Color(0xfffb8e4fc),
+          backgroundColor: const Color(0xfffb8e4fc),
         ),
         body: Stack(alignment: Alignment.center, children: [
           Container(
@@ -89,7 +89,7 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: Color(0xfffb8e4fc),
+                        fillColor: const Color(0xfffb8e4fc),
                       ),
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -111,7 +111,7 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: Color(0xfffb8e4fc),
+                        fillColor: const Color(0xfffb8e4fc),
                       ),
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -133,7 +133,7 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: Color(0xfffb8e4fc),
+                        fillColor: const Color(0xfffb8e4fc),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -154,7 +154,7 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: Color(0xfffb8e4fc),
+                        fillColor: const Color(0xfffb8e4fc),
                       ),
                       keyboardType: TextInputType.number,
                       validator: (value) {

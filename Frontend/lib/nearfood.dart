@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:grub_genie/models.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
-import 'package:grub_genie/Api code/providers/nearfood_api.dart';
 import 'Api code/models/nearfood.dart';
 import 'Api code/service/nearfood_service.dart';
 import 'chatbot_button.dart';
@@ -105,7 +103,7 @@ class _FoodListState extends State<FoodList> {
                 builder: (context, myFoodProvider, child) {
               return Scaffold(
                   appBar: EasySearchBar(
-                      backgroundColor: Color(0xfffb8e4fc),
+                      backgroundColor: const Color(0xfffb8e4fc),
                       foregroundColor: Colors.black,
                       title: const Text('Search'),
                       onSearch: (value) {

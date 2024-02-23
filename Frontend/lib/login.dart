@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'chatbot_button.dart';
+import 'package:grub_genie/Api code/service/storelogin_service.dart';
+import 'package:grub_genie/Api code/service/userlogin_service.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -12,11 +11,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  int loginType = 1; // 1 for user, 2 for store
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Login"),
+        backgroundColor: const Color(0xfffb8e4fc),
+      ),
       body: Stack(alignment: Alignment.center, children: [
         Container(
           alignment: Alignment.center,
@@ -32,13 +37,46 @@ class _LoginState extends State<Login> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  "Login",
-                  style: GoogleFonts.oswald(color: Colors.black, fontSize: 40),
-                  textAlign: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio(
+                      value: 1,
+                      groupValue: loginType,
+                      onChanged: (value) {
+                        setState(() {
+                          loginType = value as int;
+                        });
+                      },
+                    ),
+                    Text(
+                      'User',
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Radio(
+                      value: 2,
+                      groupValue: loginType,
+                      onChanged: (value) {
+                        setState(() {
+                          loginType = value as int;
+                        });
+                      },
+                    ),
+                    Text(
+                      'Store',
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
-                const Padding(padding: EdgeInsets.all(20)),
+                const Padding(padding: EdgeInsets.all(10)),
                 TextFormField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: GoogleFonts.josefinSans(
@@ -46,12 +84,13 @@ class _LoginState extends State<Login> {
                       fontSize: 16,
                     ),
                     filled: true,
-                    fillColor: Color(0xfffb8e4fc),
+                    fillColor: const Color(0xfffb8e4fc),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const Padding(padding: EdgeInsets.all(10)),
                 TextFormField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: GoogleFonts.josefinSans(
@@ -59,14 +98,50 @@ class _LoginState extends State<Login> {
                       fontSize: 16,
                     ),
                     filled: true,
-                    fillColor: Color(0xfffb8e4fc),
+                    fillColor: const Color(0xfffb8e4fc),
                   ),
                   obscureText: true,
                 ),
                 const Padding(padding: EdgeInsets.all(20)),
                 ElevatedButton(
-                  onPressed: () {
-                    // TODO: Implement login or registration logic
+                  onPressed: () async {
+                    try {
+                      if (loginType == 1) {
+                        final result = await UserLoginService().userLogin(
+                          identifier: emailController.text,
+                          password: passwordController.text,
+                        );
+                        print(result);
+
+                        // Handle result accordingly
+                        if (result != null) {
+                          // User registration successful, you can navigate to another screen or perform additional actions.
+                          print(
+                              "User logged in successfully with ID: ${result.userId}");
+                        } else {
+                          // User registration failed
+                          print("User login failed");
+                        }
+                      } else if (loginType == 2) {
+                        final result = await StoreLoginService().storeLogin(
+                          identifier: emailController.text,
+                          password: passwordController.text,
+                        );
+
+                        // Handle result accordingly
+                        if (result != null) {
+                          // Store registration successful, you can navigate to another screen or perform additional actions.
+                          print(
+                              "Store logged in successfully with ID: ${result.storeId}");
+                        } else {
+                          // Store registration failed
+                          print("Store registration failed");
+                        }
+                      }
+                    } catch (e) {
+                      // Handle errors if any
+                      print('Error during login: $e');
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -83,13 +158,7 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-        ),
-        ChatbotButton(
-          onPressed: () {
-            // Handle the chatbot button press
-            // You can implement the logic to open/minimize the chatbot here
-          },
-        ),
+        )
       ]),
     );
   }
