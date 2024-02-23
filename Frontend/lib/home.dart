@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
                 );
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.blue.shade300),
+                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
               ),
               child: Text(
                 "Register Food Item",
