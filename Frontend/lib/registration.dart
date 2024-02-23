@@ -117,7 +117,6 @@ class _RegistrationState extends State<Registration> {
                       dob = pickedDate.toString().split(' ')[0];
                     });
                   }
-                  print(dob);
                 },
                 style: ButtonStyle(
                   backgroundColor:
