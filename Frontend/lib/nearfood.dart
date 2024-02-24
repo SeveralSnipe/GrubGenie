@@ -112,13 +112,7 @@ class _FoodListState extends State<FoodList> {
                   body: Stack(alignment: Alignment.center, children: [
                     Container(
                         alignment: Alignment.topCenter,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Colors.blue, Colors.lightBlue],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                        ),
+                        color: Colors.lightBlue,
                         child: ListView.builder(
                             padding: const EdgeInsets.only(top: 10),
                             itemCount: myFoodProvider.cardList.length,

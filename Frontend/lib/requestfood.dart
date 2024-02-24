@@ -36,13 +36,7 @@ class _RequestFoodState extends State<RequestFood> {
       body: Stack(alignment: Alignment.center, children: [
         Container(
           alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.lightBlue],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+          color: Colors.lightBlue,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Form(

@@ -41,13 +41,7 @@ class _ChatbotState extends State<Chatbot> {
             ),
             body: Container(
               alignment: Alignment.topCenter,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue, Colors.lightBlue],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
+              color: Colors.lightBlue,
               child: Column(
                 children: [
                   Expanded(

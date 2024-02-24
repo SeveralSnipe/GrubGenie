@@ -31,13 +31,7 @@ class _MyAppState extends State<MyApp> {
           case ConnectionState.done:
             return Container(
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blue, Colors.lightBlue],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
+                color: Colors.lightBlue,
                 child: const Home());
           default:
             return const Center(

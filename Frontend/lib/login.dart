@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grub_genie/Api code/service/storelogin_service.dart';
 import 'package:grub_genie/Api code/service/userlogin_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:grub_genie/userhome.dart';
+import 'package:grub_genie/storehome.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,10 +15,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  int loginType = 1; // 1 for user, 2 for store
+  int loginType = 1;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -105,15 +109,30 @@ class _LoginState extends State<Login> {
                           identifier: emailController.text,
                           password: passwordController.text,
                         );
-                        print(result);
-
-                        // Handle result accordingly
                         if (result != null) {
-                          // User registration successful, you can navigate to another screen or perform additional actions.
                           print(
                               "User logged in successfully with ID: ${result.userId}");
+                          await _secureStorage.write(
+                            key: 'token',
+                            value: result.token,
+                          );
+                          await _secureStorage.write(
+                            key: 'userId',
+                            value: result.userId,
+                          );
+                          await _secureStorage.write(
+                            key: 'userName',
+                            value: result.userName,
+                          );
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: const UserHome(),
+                              type: PageTransitionType.rightToLeft,
+                              duration: const Duration(milliseconds: 700),
+                            ),
+                          );
                         } else {
-                          // User registration failed
                           print("User login failed");
                         }
                       } else if (loginType == 2) {
@@ -122,18 +141,34 @@ class _LoginState extends State<Login> {
                           password: passwordController.text,
                         );
 
-                        // Handle result accordingly
                         if (result != null) {
-                          // Store registration successful, you can navigate to another screen or perform additional actions.
                           print(
                               "Store logged in successfully with ID: ${result.storeId}");
+                          await _secureStorage.write(
+                            key: 'token',
+                            value: result.token,
+                          );
+                          await _secureStorage.write(
+                            key: 'storeId',
+                            value: result.storeId,
+                          );
+                          await _secureStorage.write(
+                            key: 'storeName',
+                            value: result.storeName,
+                          );
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: const StoreHome(),
+                              type: PageTransitionType.rightToLeft,
+                              duration: const Duration(milliseconds: 700),
+                            ),
+                          );
                         } else {
-                          // Store registration failed
-                          print("Store registration failed");
+                          print("Store login failed");
                         }
                       }
                     } catch (e) {
-                      // Handle errors if any
                       print('Error during login: $e');
                     }
                   },
