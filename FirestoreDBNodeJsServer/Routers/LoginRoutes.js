@@ -39,7 +39,12 @@ LoginRouter.post("/loginUser", async (req, res) => {
     );
     res
       .status(200)
-      .json({ message: "success", token: token, userId: userData.UserId });
+      .json({
+        message: "success",
+        token: token,
+        userId: userData.UserId,
+        userName: userData.UserName,
+      });
   } catch (error) {
     console.error("Error authenticating user:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -77,7 +82,12 @@ LoginRouter.post("/loginStore", async (req, res) => {
     );
     res
       .status(200)
-      .json({ message: "success", token: token, StoreId: StoreData.StoreId });
+      .json({
+        message: "success",
+        token: token,
+        StoreId: StoreData.StoreId,
+        StoreName: StoreData.StoreName,
+      });
   } catch (error) {
     console.error("Error authenticating user:", error);
     res.status(500).json({ error: "Internal Server Error" });
