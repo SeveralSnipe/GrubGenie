@@ -17,26 +17,20 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-        backgroundColor: const Color(0xfffb8e4fc),
-      ),
-      body: Stack(alignment: Alignment.center, children: [
-        Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.lightBlue],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: SingleChildScrollView(
+    return Container(
+        alignment: Alignment.center,
+        color: Colors.lightBlue,
+        child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  "Login",
+                  style: GoogleFonts.josefinSans(
+                      color: Colors.black87, fontSize: 30),
+                ),
+                const Padding(padding: EdgeInsets.all(20)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -156,10 +150,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ],
-            ),
-          ),
-        )
-      ]),
-    );
+            )));
   }
 }

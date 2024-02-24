@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:grub_genie/apiplayground.dart';
 import 'package:grub_genie/nearfood.dart';
 import 'package:grub_genie/requestfood.dart';
-import 'package:grub_genie/login.dart';
-import 'package:grub_genie/registration.dart';
+import 'package:grub_genie/newhome.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:grub_genie/chatbot_button.dart';
 import 'package:grub_genie/food_item_registration.dart';
@@ -80,7 +79,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   PageTransition(
-                    child: const Login(),
+                    child: const NewHome(),
                     type: PageTransitionType.rightToLeft,
                     duration: const Duration(milliseconds: 700),
                   ),
@@ -90,30 +89,7 @@ class _HomeState extends State<Home> {
                 backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
               ),
               child: Text(
-                "Login",
-                style: GoogleFonts.josefinSans(
-                  color: Colors.black87,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            const Padding(padding: EdgeInsets.all(5)),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    child: const Registration(),
-                    type: PageTransitionType.rightToLeft,
-                    duration: const Duration(milliseconds: 700),
-                  ),
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-              ),
-              child: Text(
-                "Registration",
+                "New Home",
                 style: GoogleFonts.josefinSans(
                   color: Colors.black87,
                   fontSize: 16,
