@@ -9,7 +9,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from configparser import ConfigParser
-from firebase import firestore_user_inputting,firestore_clear_questions
+from firebase import firestore_user_inputting,question_number#firestore_clear_questions
 
 
 
@@ -91,26 +91,22 @@ def user_input(user_question):
 
 
 
-def asking(usr):
-    count=0
-    while True:
-        user_question = input("Input your question (type 'exit' to quit): ")
-        print(user_question)
-        if user_question.lower() == 'exit' or user_question.lower()=='quit':
-            count=0
-            firestore_clear_questions(usr)
-            print("Thank You For Using GrubAI.")
-            break  
-        count+=1
-        data_text = get_pdf_text(pdf_docs=[pdf_path])
-        data_text_chunks = get_text_chunks(data_text)
-        get_vector_store(data_text_chunks)
-        x=user_input(user_question)
-        # print(x) #take out
-        j=str(count)
-        question_no="Question"+j
-        new_question = {"Question": user_question,"Answer": x}
-        firestore_user_inputting(usr,question_no,new_question)
+def asking(usr,user_question):
+    print(user_question)
+    if user_question.lower() == 'exit' or user_question.lower()=='quit':
+        # firestore_clear_questions(usr)
+        print("Thank You For Using GrubAI.") 
+    data_text = get_pdf_text(pdf_docs=[pdf_path])
+    data_text_chunks = get_text_chunks(data_text)
+    get_vector_store(data_text_chunks)
+    x=user_input(user_question)
+    j=question_number(usr)
+    question_no="QA"+j
+    new_question = {"Q": user_question,"A": x}
+    firestore_user_inputting(usr,question_no,new_question)
+    return x
+
+
 
 
 # asking("User1")
