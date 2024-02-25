@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'chatbot_button.dart';
+import 'mapsregistration.dart';
 
 class RequestFood extends StatefulWidget {
   const RequestFood({Key? key}) : super(key: key);
@@ -17,13 +19,21 @@ class _RequestFoodState extends State<RequestFood> {
   String additionalNotes = '';
   String location = '';
   double maxDistance = 0.0;
+  var mapResult = [0.0, 0.0];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  List<String> foodItems = [
-    'Maggi Masala 1-Pack',
-    'iD Chapati 350g',
-  ];
+  Future<void> _mapSelect(BuildContext context) async {
+    var temp = await Navigator.push(
+      context,
+      PageTransition(
+        child: MapPage(),
+        type: PageTransitionType.rightToLeft,
+        duration: const Duration(milliseconds: 700),
+      ),
+    );
+    mapResult = temp;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,73 +53,21 @@ class _RequestFoodState extends State<RequestFood> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  DropdownMenu<String>(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    inputDecorationTheme: InputDecorationTheme(
-                      filled: true,
-                      fillColor: const Color(0xffb8e4fc),
-                    ),
-                    initialSelection: selectedFoodItem,
-                    label: Text(
-                      'Food Item',
-                      style: GoogleFonts.josefinSans(
-                        color: Colors.black87,
-                        fontSize: 16,
-                      ),
-                    ),
-                    onSelected: (String? foodItem) {
-                      setState(() {
-                        selectedFoodItem = foodItem;
-                      });
-                    },
-                    dropdownMenuEntries: foodItems
-                        .map<DropdownMenuEntry<String>>(
-                          (String foodItem) => DropdownMenuEntry<String>(
-                            value: foodItem,
-                            label: foodItem,
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  const Padding(padding: EdgeInsets.all(10)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Quantity',
-                        style: GoogleFonts.josefinSans(
+                  TextFormField(
+                    decoration: InputDecoration(
+                        labelText: 'Requested Item',
+                        labelStyle: GoogleFonts.josefinSans(
                           color: Colors.black87,
                           fontSize: 16,
                         ),
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              setState(() {
-                                if (quantity > 1) quantity--;
-                              });
-                            },
-                          ),
-                          Text(
-                            '$quantity',
-                            style: GoogleFonts.josefinSans(
-                              color: Colors.black87,
-                              fontSize: 16,
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              setState(() {
-                                quantity++;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+                        filled: true,
+                        fillColor: const Color(0xffb8e4fc)),
+                    maxLines: 3,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedFoodItem = value;
+                      });
+                    },
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
                   TextFormField(
@@ -129,20 +87,21 @@ class _RequestFoodState extends State<RequestFood> {
                     },
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Location',
-                        labelStyle: GoogleFonts.josefinSans(
-                          color: Colors.black87,
-                          fontSize: 16,
-                        ),
-                        filled: true,
-                        fillColor: const Color(0xffb8e4fc)),
-                    onChanged: (value) {
-                      setState(() {
-                        location = value;
-                      });
+                  ElevatedButton(
+                    onPressed: () {
+                      _mapSelect(context);
                     },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.green.shade300),
+                    ),
+                    child: Text(
+                      "Mark Location",
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
                   TextFormField(
@@ -202,12 +161,6 @@ class _RequestFoodState extends State<RequestFood> {
               ),
             ),
           ),
-        ),
-        ChatbotButton(
-          onPressed: () {
-            // Handle the chatbot button press
-            // You can implement the logic to open/minimize the chatbot here
-          },
         ),
       ]),
     );
