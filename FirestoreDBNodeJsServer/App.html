@@ -151,7 +151,35 @@
     <h2>CommerceNearMeRoutes</h2>
 
     <h3>CommerceNearMeRouter</h3>
+    <h3>Store Items</h3>
 
+    <h4 class="get">GET "/CommerceNearMeRouter/StoreItems/:storeId"</h4>
+    <p>Retrieves all items associated with a specific store.</p>
+    <p><strong>Parameters:</strong> storeId (string)</p>
+    <p>
+      <strong>Response:</strong> JSON object containing the items associated
+      with the specified store.
+    </p>
+    <pre>
+        <code>
+            {
+                "results": [
+                    {
+                        "ExpiryDate": {
+                            "_seconds": 1735603200,
+                            "_nanoseconds": 0
+                        },
+                        "ItemMRP": 50,
+                        "ItemSP": 40,
+                        "StockQuantity": 100,
+                        "ItemName": "Sample Item",
+                        "ItemId": "IT53Q74ZFEVH",
+                        "StoreId": "SIYAJL3UFF4L"
+                    }
+                ]
+            }
+        </code>
+    </pre>
     <h4 class="get">GET "/CommerceNearMeRouter/AllStores"</h4>
     <p>Retrieves all store details in alphabetical order.</p>
     <p><strong>Response:</strong></p>
@@ -354,7 +382,10 @@
 }</code></pre>
 
     <h4 class="post">POST "/CommerceNearMeRouter/StoreNearMeWithItemNames"</h4>
-    <p>Retrieves stores with their respective items within a certain distance from a given location.</p>
+    <p>
+      Retrieves stores with their respective items within a certain distance
+      from a given location.
+    </p>
     <pre><code>{
     "sorts": "dist",
     "location": [80,70],
@@ -428,7 +459,10 @@
 }</code></pre>
 
     <h4 class="post">POST "/CommerceNearMeRouter/ItemNearMeWithStore"</h4>
-    <p>Retrieves items with their respective stores within a certain distance from a given location.</p>
+    <p>
+      Retrieves items with their respective stores within a certain distance
+      from a given location.
+    </p>
     <pre><code>{
     "sorts": "dist",
     "location": [80,70],
@@ -504,5 +538,232 @@
 "message": "Request updated successfully.",
 "requestId": "RQEPR81XNV44"
 }</code></pre>
-  </body>
+    <h3>Request for Store</h3>
+
+    <h4 class="get">GET "/CommerceRequestRouter/requestStore/:storeid"</h4>
+    <p>Retrieves details of requests for a specific store.</p>
+    <p><strong>Parameters:</strong> storeid (string)</p>
+    <p>
+      <strong>Response:</strong> JSON object containing details of the requests
+      for the specified store.
+    </p>
+    <pre><code>
+    {
+        "result": [
+            {
+                "Status": "Pending",
+                "RequestId": "RQEPR81XNV44",
+                "Location": {
+                    "_latitude": 40.7128,
+                    "_longitude": -74.006
+                },
+                "AdditionalNotes": [
+                    "Please deliver before 5 PM.",
+                    "Alright"
+                ],
+                "UserId": "UIB06RPMVS4B",
+                "Orders": {
+                    "SIYAJL3UFF4L": {
+                        "IT53Q74ZFEVH": 20,
+                        "IT1JHI48YO0U": 10
+                    },
+                    "SIJT0AG7QPH9": {
+                        "ITVJ513ZSVNL": 5
+                    }
+                },
+                "CostPrice": 4150,
+                "DiscountPrice": 3400
+            }
+        ]
+    }
+</code></pre>
+    <h3>Request by User</h3>
+
+    <h4 class="get">GET "/CommerceRequestRouter/requestUser/:userid"</h4>
+    <p>Retrieves details of requests for a specific user.</p>
+    <p><strong>Parameters:</strong> userid (string)</p>
+    <p>
+      <strong>Response:</strong> JSON object containing details of the requests
+      for the specified user.
+    </p>
+    <pre>
+<code>
+    {
+        "result": [
+            {
+                "Status": "Pending",
+                "RequestId": "RQEPR81XNV44",
+                "Location": {
+                    "_latitude": 40.7128,
+                    "_longitude": -74.006
+                },
+                "AdditionalNotes": [
+                    "Please deliver before 5 PM.",
+                    "Alright"
+                ],
+                "UserId": "UIB06RPMVS4B",
+                "Orders": {
+                    "SIYAJL3UFF4L": {
+                        "IT53Q74ZFEVH": 20,
+                        "IT1JHI48YO0U": 10
+                    },
+                    "SIJT0AG7QPH9": {
+                        "ITVJ513ZSVNL": 5
+                    }
+                },
+                "CostPrice": 4150,
+                "DiscountPrice": 3400
+            },
+            {
+                "Status": "Pending",
+                "Orders": {
+                    "SIJT0AG7QPH9": {
+                        "ITH3JHO2C3FU": 1
+                    }
+                },
+                "AdditionalNotes": [
+                    "Please deliver before 5 PM."
+                ],
+                "RequestId": "RQFAVBYPNUQ2",
+                "UserId": "UIB06RPMVS4B",
+                "CostPrice": 15,
+                "Location": {
+                    "_latitude": 13.113715408795796,
+                    "_longitude": 80.21668124171242
+                },
+                "DiscountPrice": 10
+            }
+        ]
+    }
+</code>
+</pre><h2>UnMappedRouter</h2>
+
+<h3>Add To UnmappedItemDetails Collection</h3>
+
+<h4 class="post">POST "/UMRequest"</h4>
+<p>Adds a request to the UnmappedItemDetails collection.</p>
+<pre><code>{ /* Request Body Example */
+  "Location": [latitude, longitude],
+  "UserId": "userId",
+  "Item": {
+    "ItemName": "itemName",
+    "ItemQuantity": quantity
+  },
+  "PreferedPrice": preferredPrice,
+  "AgreedPrice": agreedPrice, /* Optional */
+  "AdditionalNotes": ["note1", "note2", ...] /* Optional */
+}</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code>{
+"message": "Request saved successfully.",
+"requestId": "requestId"
+}</code></pre>
+
+<h4 class="patch">PATCH "/updateUMItem/:itemId"</h4>
+<p>Updates information of an item in the UnmappedItemDetails collection.</p>
+<p><strong>Parameters:</strong> itemId (string)</p>
+<pre><code>{ /* Request Body Example */
+  "ExpiryDate": "expiryDate", /* Optional */
+  "StockQuantity": stockQuantity, /* Optional */
+  "AgreedPrice": agreedPrice, /* Optional */
+  "Status": "status", /* Optional */
+  "AdditionalNotes": ["note1", "note2", ...], /* Optional */
+  "StoreId": "storeId"
+}</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code>{
+"message": "success"
+}</code></pre>
+
+<h3>Retrieve Not Claimed Unmapped Requests</h3>
+
+<h4 class="get">GET "/NotClaimedUMReqs/store/:storeId"</h4>
+<p>Retrieves unclaimed requests for a specific store.</p>
+<p><strong>Parameters:</strong> storeId (string)</p>
+<p><strong>Response:</strong></p>
+<pre><code>{
+"result": [
+  {
+    "RequestId": "requestId1",
+    "UserId": "userId1",
+    "Location": {
+      "_latitude": latitude,
+      "_longitude": longitude
+    },
+    "Item": {
+      "ItemId": "itemId1",
+      "ItemName": "itemName1",
+      "Quantity": quantity1
+    },
+    "PreferedPrice": preferredPrice1,
+    "AgreedPrice": agreedPrice1,
+    "Status": "status1",
+    "AdditionalNotes": ["note1", "note2", ...]
+  },
+  {
+    "RequestId": "requestId2",
+    "UserId": "userId2",
+    "Location": {
+      "_latitude": latitude,
+      "_longitude": longitude
+    },
+    "Item": {
+      "ItemId": "itemId2",
+      "ItemName": "itemName2",
+      "Quantity": quantity2
+    },
+    "PreferedPrice": preferredPrice2,
+    "AgreedPrice": agreedPrice2,
+    "Status": "status2",
+    "AdditionalNotes": ["note1", "note2", ...]
+  },
+  ...
+]
+}</code></pre>
+
+<h4 class="get">GET "/NotClaimedUMReqs/user/:userId"</h4>
+<p>Retrieves unclaimed requests for a specific user.</p>
+<p><strong>Parameters:</strong> userId (string)</p>
+<p><strong>Response:</strong></p>
+<pre><code>{
+"result": [
+  {
+    "RequestId": "requestId1",
+    "UserId": "userId1",
+    "Location": {
+      "_latitude": latitude,
+      "_longitude": longitude
+    },
+    "Item": {
+      "ItemId": "itemId1",
+      "ItemName": "itemName1",
+      "Quantity": quantity1
+    },
+    "PreferedPrice": preferredPrice1,
+    "AgreedPrice": agreedPrice1,
+    "Status": "status1",
+    "AdditionalNotes": ["note1", "note2", ...]
+  },
+  {
+    "RequestId": "requestId2",
+    "UserId": "userId2",
+    "Location": {
+      "_latitude": latitude,
+      "_longitude": longitude
+    },
+    "Item": {
+      "ItemId": "itemId2",
+      "ItemName": "itemName2",
+      "Quantity": quantity2
+    },
+    "PreferedPrice": preferredPrice2,
+    "AgreedPrice": agreedPrice2,
+    "Status": "status2",
+    "AdditionalNotes": ["note1", "note2", ...]
+  },
+  ...
+]
+}</code></pre>
+
+</body>
 </html>

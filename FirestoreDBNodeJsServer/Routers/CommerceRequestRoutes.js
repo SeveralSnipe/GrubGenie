@@ -58,5 +58,60 @@ CommerceRequestRouter.post("/requestItem", async (req, res) => {
     }
   });
 
+  CommerceRequestRouter.get("/requestStore/:storeid", async (req, res) => {
+    try {
+        // Retrieve the storeid from the request parameters
+        const storeid = req.params.storeid;
+
+        // Query the database to get the details of the request for the given storeid
+        const querySnapshot = await db.collection('RequestDetails')
+            .where(`Orders.${storeid}`, '!=', null) // Assuming 'Orders' is the field containing store details
+            .get();
+
+        // Extract the details from the query snapshot
+        const requestDetails = [];
+        querySnapshot.forEach(doc => {
+            // Assuming each document contains the details of a request
+            const requestData = doc.data();
+            requestDetails.push(requestData);
+        });
+
+        // Send the response with the details of the request for the given storeid
+        res.status(200).json({ result: requestDetails });
+    } catch (error) {
+        // Handle errors
+        console.error("Error retrieving request details:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+CommerceRequestRouter.get("/requestUser/:userid", async (req, res) => {
+  try {
+      // Retrieve the userid from the request parameters
+      const userid = req.params.userid;
+
+      // Query the database to get the details of the request for the given userid
+      const querySnapshot = await db.collection('RequestDetails')
+          .where('UserId', '==', userid) // Assuming 'UserId' is the field containing the user identifier
+          .get();
+
+      // Extract the details from the query snapshot
+      const requestDetails = [];
+      querySnapshot.forEach(doc => {
+          // Assuming each document contains the details of a request
+          const requestData = doc.data();
+          requestDetails.push(requestData);
+      });
+
+      // Send the response with the details of the request for the given userid
+      res.status(200).json({ result: requestDetails });
+  } catch (error) {
+      // Handle errors
+      console.error("Error retrieving request details:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 
   module.exports=CommerceRequestRouter
