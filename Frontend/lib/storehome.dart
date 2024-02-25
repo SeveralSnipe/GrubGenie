@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grub_genie/food_item_updation.dart';
 import 'package:grub_genie/home.dart';
+import 'package:grub_genie/storerequests.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:grub_genie/chatbot_button.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -29,6 +30,8 @@ class _StoreHomeState extends State<StoreHome> {
 
   void _loadStoreName() async {
     String? storedStoreName = await _secureStorage.read(key: 'storeName');
+    String? storedStoreId = await _secureStorage.read(key: 'storeId');
+    print(storedStoreId);
     setState(() {
       storeName = storedStoreName ?? 'Store';
     });
@@ -114,6 +117,30 @@ class _StoreHomeState extends State<StoreHome> {
                   ),
                   child: Text(
                     "Update Food Item",
+                    style: GoogleFonts.josefinSans(
+                      color: Colors.black87,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.all(5)),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: const StoreRequestsScreen(),
+                        type: PageTransitionType.rightToLeft,
+                        duration: const Duration(milliseconds: 700),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Colors.green.shade300),
+                  ),
+                  child: Text(
+                    "Store Requests",
                     style: GoogleFonts.josefinSans(
                       color: Colors.black87,
                       fontSize: 16,

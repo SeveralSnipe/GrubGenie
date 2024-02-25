@@ -47,17 +47,26 @@ class Result {
     required this.discountPrice,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
-        status: json["Status"],
-        requestId: json["RequestId"],
-        location: Location.fromJson(json["Location"]),
-        additionalNotes:
-            List<String>.from(json["AdditionalNotes"].map((x) => x)),
-        userId: json["UserId"],
-        orders: json["Orders"],
-        costPrice: json["CostPrice"],
-        discountPrice: json["DiscountPrice"],
-      );
+  factory Result.fromJson(Map<String, dynamic> json) {
+    // Explicitly cast the 'orders' field to Map<String, Map<String, int>>
+    Map<String, dynamic> rawOrders = json["Orders"];
+    Map<String, Map<String, int>> orders = {};
+
+    rawOrders.forEach((key, value) {
+      orders[key] = Map<String, int>.from(value);
+    });
+
+    return Result(
+      status: json["Status"],
+      requestId: json["RequestId"],
+      location: Location.fromJson(json["Location"]),
+      additionalNotes: List<String>.from(json["AdditionalNotes"].map((x) => x)),
+      userId: json["UserId"],
+      orders: orders,
+      costPrice: json["CostPrice"],
+      discountPrice: json["DiscountPrice"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "Status": status,

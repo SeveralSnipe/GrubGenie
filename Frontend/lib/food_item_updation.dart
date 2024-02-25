@@ -134,6 +134,7 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
                         onChanged: (newValue) {
                           setState(() {
                             selectedItemId = newValue;
+                            print(selectedItemId);
                           });
                         },
                         items: dropdownItems,

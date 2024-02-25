@@ -381,6 +381,7 @@ class _RegistrationState extends State<Registration> {
                       }
                     }
                   } catch (e) {
+                    // Handle errors if any
                     print('Error during registration: $e');
                     _showMessage(
                         "An error occurred during registration. Please try again.");
