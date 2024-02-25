@@ -28,14 +28,14 @@ class NearFood {
 class Result {
   String storeId;
   String storeName;
-  int? gstNo;
-  int? phoneNumber;
+  var gstNo;
+  var phoneNumber;
   String? resultEmail;
   Location location;
   List<Item> items;
   double distance;
   String? email;
-  int? gst;
+  var gst;
 
   Result({
     required this.storeId,
