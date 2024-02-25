@@ -9,8 +9,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from configparser import ConfigParser
-from firebase import firestore_user_inputting,question_number#firestore_clear_questions
-
+# firestore_clear_questions
+from firebase import firestore_user_inputting, question_number
 
 
 config = ConfigParser()
@@ -19,35 +19,41 @@ api_key = config['gemini_ai']['API_KEY']
 os.environ["GOOGLE_API_KEY"] = api_key
 
 
-pdf_path="data.pdf"
+pdf_path = "data.pdf"
+
 
 def get_pdf_text(pdf_docs):
-    text=""
+    text = ""
     for pdf in pdf_docs:
-        pdf_reader= PdfReader(pdf)
+        pdf_reader = PdfReader(pdf)
         for page in pdf_reader.pages:
-            text+= page.extract_text()
-    return  text
-
-
-
+            text += page.extract_text()
+    return text
 
 
 def get_text_chunks(text):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000, chunk_overlap=200)
     chunks = text_splitter.split_text(text)
     return chunks
 
 
 def get_vector_store(text_chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
 
 def get_conversational_chain():
     prompt_template = """
-    Answer the question  from the provided context.
+    Answer the question from the provided context.
+    The data will consist of stores with a variety of items,
+    each costing some money SP, which is the selling price of the item. MRP is the maximum retail price.
+    You are GrubAI, a helper who helps users find items or collections
+    based on their needs. Assume that you are the owner of all the stores and the stock. One of your primary functions could be to create
+    a basket of items based on a budget. You can create your own inferences
+    about the items and stores based on the data available to you. Under no
+    circumstances should you say that the context does not provide information.
     Data: {context}
     
     Question: {question}
@@ -58,48 +64,41 @@ def get_conversational_chain():
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
 
     # Update the input_variables to match the expected variables of your chain
-    prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+    prompt = PromptTemplate(template=prompt_template,
+                            input_variables=["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
 
     return chain
 
 
-
-
 def user_input(user_question):
-    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
-    
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
     new_db = FAISS.load_local("faiss_index", embeddings)
     docs = new_db.similarity_search(user_question)
 
     chain = get_conversational_chain()
 
-    
     response = chain(
-        {"input_documents":docs, "question": user_question}
-        , return_only_outputs=True)
+        {"input_documents": docs, "question": user_question}, return_only_outputs=True)
 
     return response['output_text']
 
 
-
-
-def asking(usr,user_question):
+def asking(usr, user_question):
     print(user_question)
-    if user_question.lower() == 'exit' or user_question.lower()=='quit':
+    if user_question.lower() == 'exit' or user_question.lower() == 'quit':
         # firestore_clear_questions(usr)
-        print("Thank You For Using GrubAI.") 
+        print("Thank You For Using GrubAI.")
     data_text = get_pdf_text(pdf_docs=[pdf_path])
     data_text_chunks = get_text_chunks(data_text)
     get_vector_store(data_text_chunks)
-    x=user_input(user_question)
-    j=question_number(usr)
-    question_no="QA"+j
-    new_question = {"Q": user_question,"A": x}
-    firestore_user_inputting(usr,question_no,new_question)
+    x = user_input(user_question)
+    j = question_number(usr)
+    question_no = "QA"+j
+    new_question = {"Q": user_question, "A": x}
+    firestore_user_inputting(usr, question_no, new_question)
     return x
-
-
 
 
 # asking("User1")
