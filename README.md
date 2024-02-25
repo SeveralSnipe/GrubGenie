@@ -49,3 +49,4 @@ Quantifiable data collected through user surveys and feedback mechanisms validat
 - **Scalability:** Deploying on scalable platforms like Google Cloud for seamless performance.
 - **Partnerships:** Collaborating with startups and government agencies to increase awareness and reach underserved communities.
 
+![Alt Text](./ReadMe/giphy.gif)
