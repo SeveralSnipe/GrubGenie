@@ -34,7 +34,7 @@ def get_pdf_text(pdf_docs):
 
 
 def get_text_chunks(text):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     chunks = text_splitter.split_text(text)
     return chunks
 
@@ -47,17 +47,10 @@ def get_vector_store(text_chunks):
 
 def get_conversational_chain():
     prompt_template = """
-    You are GrubAI, a friendly assistant who works for the app Grub. You must answer any questions related to the app Grub. 
-    You will be provided with data which will help you to answer questions related to the app. 
-    The data will be given in the format:
-    Now you should only answer according to this data only.
+    Answer the question  from the provided context.
+    Data: {context}
     
-    If it Tells Show stores Near me respond with all names Of store provided in data
-
-    Also, there should be no response to any unethical prompts.
-
-    Data:\n {context}?\n
-    Question: \n{question}\n
+    Question: {question}
 
     Answer:
     """

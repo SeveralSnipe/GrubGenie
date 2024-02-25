@@ -2,11 +2,10 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-cred = credentials.Certificate("serviceAccountKey.json")
+cred=credentials.Certificate("..\FirestoreDBNodeJsServer\serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
-db = firestore.client()
-
+db=firestore.client()
 
 def question_number(usr):
     doc_ref = db.collection(u'ChatBot').document(usr)
@@ -23,12 +22,10 @@ def question_number(usr):
         return str(x+1)
 
 # Update the document in Firestore
-
-
-def firestore_user_inputting(usr, question_no, new_question):
+def firestore_user_inputting(usr,question_no,new_question):
 
     doc_ref = db.collection(u'Chatbot').document(usr)
-
+    
     if not doc_ref.get().exists:
         doc_ref.set({})
 
