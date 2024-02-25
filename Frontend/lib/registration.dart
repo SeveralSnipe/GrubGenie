@@ -23,6 +23,107 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController storeNameController = TextEditingController();
   int registrationType = 1; // 1 for user, 2 for store
   String? dob;
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter Email';
+    }
+    if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+        .hasMatch(value)) {
+      return 'Please enter a valid Email';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter Password';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters long';
+    }
+    return null;
+  }
+
+  String? _validateText(String? value, String fieldName) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter $fieldName';
+    }
+    return null;
+  }
+
+  String? _validatePhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter Phone Number';
+    }
+    if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+      return 'Please enter a valid 10-digit Phone Number';
+    }
+    return null;
+  }
+
+  bool _validateForm() {
+    if (_validateEmail(emailController.text) != null) {
+      _showMessage(_validateEmail(emailController.text)!);
+      return false;
+    }
+
+    if (_validatePassword(passwordController.text) != null) {
+      _showMessage(_validatePassword(passwordController.text)!);
+      return false;
+    }
+
+    if (registrationType == 1) {
+      // User registration fields validation
+      if (dob == null) {
+        _showMessage("Please select Date of Birth");
+        return false;
+      }
+
+      if (_validatePhoneNumber(phoneNumberController.text) != null) {
+        _showMessage(_validatePhoneNumber(phoneNumberController.text)!);
+        return false;
+      }
+
+      if (_validateText(userNameController.text, 'UserName') != null) {
+        _showMessage(_validateText(userNameController.text, 'UserName')!);
+        return false;
+      }
+    } else if (registrationType == 2) {
+      // Store registration fields validation
+      if (_validateText(gstController.text, 'GST') != null) {
+        _showMessage(_validateText(gstController.text, 'GST')!);
+        return false;
+      }
+
+      if (_validateText(locationController.text, 'Location') != null) {
+        _showMessage(_validateText(locationController.text, 'Location')!);
+        return false;
+      }
+
+      if (_validatePhoneNumber(storePhoneNumberController.text) != null) {
+        _showMessage(_validatePhoneNumber(storePhoneNumberController.text)!);
+        return false;
+      }
+
+      if (_validateText(storeNameController.text, 'StoreName') != null) {
+        _showMessage(_validateText(storeNameController.text, 'StoreName')!);
+        return false;
+      }
+    }
+
+    // All checks passed, form is valid
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -229,50 +330,52 @@ class _RegistrationState extends State<Registration> {
             const Padding(padding: EdgeInsets.all(20)),
             ElevatedButton(
               onPressed: () async {
-                try {
-                  if (registrationType == 1) {
-                    // User registration logic
-                    final result = await RegisterUserService().registerUser(
-                      userName: userNameController.text,
-                      dob: dob!,
-                      email: emailController.text,
-                      phoneNumber: phoneNumberController.text,
-                      password: passwordController.text,
-                    );
-                    print(result);
+                if (_validateForm()) {
+                  try {
+                    if (registrationType == 1) {
+                      // User registration logic
+                      final result = await RegisterUserService().registerUser(
+                        userName: userNameController.text,
+                        dob: dob!,
+                        email: emailController.text,
+                        phoneNumber: phoneNumberController.text,
+                        password: passwordController.text,
+                      );
+                      // Handle result accordingly
+                      if (result != null) {
+                        print(result.userId);
+                        // User registration successful, you can navigate to another screen or perform additional actions.
+                        _showMessage("User registered successfully!");
+                      } else {
+                        // User registration failed
+                        _showMessage("User registration failed");
+                      }
+                    } else if (registrationType == 2) {
+                      final result = await RegisterStoreService().registerStore(
+                        storeName: storeNameController.text,
+                        gst: gstController.text,
+                        email: emailController.text,
+                        location: [13.113715408791111, 80.21668124172232],
+                        phoneNumber: storePhoneNumberController.text,
+                        password: passwordController.text,
+                      );
 
-                    // Handle result accordingly
-                    if (result != null) {
-                      // User registration successful, you can navigate to another screen or perform additional actions.
-                      print(
-                          "User registered successfully with ID: ${result.userId}");
-                    } else {
-                      // User registration failed
-                      print("User registration failed");
+                      // Handle result accordingly
+                      if (result != null) {
+                        print(result.storeId);
+                        // Store registration successful, you can navigate to another screen or perform additional actions.
+                        _showMessage("Store registered successfully!");
+                      } else {
+                        // Store registration failed
+                        _showMessage("Store registration failed!");
+                      }
                     }
-                  } else if (registrationType == 2) {
-                    final result = await RegisterStoreService().registerStore(
-                      storeName: storeNameController.text,
-                      gst: gstController.text,
-                      email: emailController.text,
-                      location: [13.113715408791111, 80.21668124172232],
-                      phoneNumber: storePhoneNumberController.text,
-                      password: passwordController.text,
-                    );
-
-                    // Handle result accordingly
-                    if (result != null) {
-                      // Store registration successful, you can navigate to another screen or perform additional actions.
-                      print(
-                          "Store registered successfully with ID: ${result.storeId}");
-                    } else {
-                      // Store registration failed
-                      print("Store registration failed");
-                    }
+                  } catch (e) {
+                    // Handle errors if any
+                    print('Error during registration: $e');
+                    _showMessage(
+                        "An error occurred during registration. Please try again.");
                   }
-                } catch (e) {
-                  // Handle errors if any
-                  print('Error during registration: $e');
                 }
               },
               style: ButtonStyle(

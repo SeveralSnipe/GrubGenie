@@ -19,6 +19,15 @@ class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -110,8 +119,8 @@ class _LoginState extends State<Login> {
                           password: passwordController.text,
                         );
                         if (result != null) {
-                          print(
-                              "User logged in successfully with ID: ${result.userId}");
+                          print(result.userId);
+                          _showMessage("User logged in successfully!");
                           await _secureStorage.write(
                             key: 'token',
                             value: result.token,
@@ -133,7 +142,7 @@ class _LoginState extends State<Login> {
                             ),
                           );
                         } else {
-                          print("User login failed");
+                          _showMessage("Invalid username or password.");
                         }
                       } else if (loginType == 2) {
                         final result = await StoreLoginService().storeLogin(
@@ -142,8 +151,8 @@ class _LoginState extends State<Login> {
                         );
 
                         if (result != null) {
-                          print(
-                              "Store logged in successfully with ID: ${result.storeId}");
+                          print(result.storeId);
+                          _showMessage("Store logged in successfully!");
                           await _secureStorage.write(
                             key: 'token',
                             value: result.token,
@@ -165,11 +174,13 @@ class _LoginState extends State<Login> {
                             ),
                           );
                         } else {
-                          print("Store login failed");
+                          _showMessage("Invalid username or password.");
                         }
                       }
                     } catch (e) {
                       print('Error during login: $e');
+                      _showMessage(
+                          "An error occurred during login. Please try again.");
                     }
                   },
                   style: ButtonStyle(
