@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grub_genie/home.dart';
 import 'package:grub_genie/nearfood.dart';
 import 'package:grub_genie/requestfood.dart';
 import 'package:page_transition/page_transition.dart';
@@ -63,9 +64,14 @@ class _UserHomeState extends State<UserHome> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "$greetingMessage $username!",
+                    greetingMessage,
                     style:
                         GoogleFonts.oswald(color: Colors.black, fontSize: 40),
+                  ),
+                  Text(
+                    username,
+                    style: GoogleFonts.oswald(
+                        color: Colors.red.shade300, fontSize: 40),
                   ),
                   const Padding(padding: EdgeInsets.all(30)),
                   ElevatedButton(
@@ -121,7 +127,14 @@ class _UserHomeState extends State<UserHome> {
                       await _secureStorage.delete(key: 'token');
                       await _secureStorage.delete(key: 'userId');
                       await _secureStorage.delete(key: 'userName');
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                          child: const NewHome(),
+                          type: PageTransitionType.rightToLeft,
+                          duration: const Duration(milliseconds: 700),
+                        ),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor:

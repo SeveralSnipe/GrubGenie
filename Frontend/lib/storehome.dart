@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grub_genie/home.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:grub_genie/chatbot_button.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -49,7 +50,8 @@ class _StoreHomeState extends State<StoreHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Scaffold(
+        body: Stack(
       alignment: Alignment.center,
       children: [
         Container(
@@ -61,8 +63,13 @@ class _StoreHomeState extends State<StoreHome> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "$greetingMessage $storeName!",
+                  greetingMessage,
                   style: GoogleFonts.oswald(color: Colors.black, fontSize: 40),
+                ),
+                Text(
+                  storeName,
+                  style: GoogleFonts.oswald(
+                      color: Colors.red.shade300, fontSize: 40),
                 ),
                 const Padding(padding: EdgeInsets.all(30)),
                 ElevatedButton(
@@ -94,7 +101,14 @@ class _StoreHomeState extends State<StoreHome> {
                     await _secureStorage.delete(key: 'token');
                     await _secureStorage.delete(key: 'storeId');
                     await _secureStorage.delete(key: 'storeName');
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                        child: const NewHome(),
+                        type: PageTransitionType.rightToLeft,
+                        duration: const Duration(milliseconds: 700),
+                      ),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -120,6 +134,6 @@ class _StoreHomeState extends State<StoreHome> {
           },
         ),
       ],
-    );
+    ));
   }
 }
