@@ -127,14 +127,16 @@ class _UserHomeState extends State<UserHome> {
                       await _secureStorage.delete(key: 'token');
                       await _secureStorage.delete(key: 'userId');
                       await _secureStorage.delete(key: 'userName');
-                      Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                          child: const NewHome(),
-                          type: PageTransitionType.rightToLeft,
-                          duration: const Duration(milliseconds: 700),
-                        ),
-                      );
+                      if (context.mounted) {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            child: const NewHome(),
+                            type: PageTransitionType.rightToLeft,
+                            duration: const Duration(milliseconds: 700),
+                          ),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor:

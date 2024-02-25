@@ -107,10 +107,10 @@ class _RegistrationState extends State<Registration> {
         return false;
       }
 
-      // if (_validateText(locationController.text, 'Location') != null) {
-      //   _showMessage(_validateText(locationController.text, 'Location')!);
-      //   return false;
-      // }
+      if (mapResult[0] == 0.0 || mapResult[1] == 0.0) {
+        _showMessage("Please mark the store location");
+        return false;
+      }
 
       if (_validatePhoneNumber(storePhoneNumberController.text) != null) {
         _showMessage(_validatePhoneNumber(storePhoneNumberController.text)!);
@@ -123,7 +123,6 @@ class _RegistrationState extends State<Registration> {
       }
     }
 
-    // All checks passed, form is valid
     return true;
   }
 
@@ -316,19 +315,6 @@ class _RegistrationState extends State<Registration> {
                   ),
                 ),
               ),
-              // TextFormField(
-              //   controller: locationController,
-              //   decoration: InputDecoration(
-              //     labelText: 'Location',
-              //     labelStyle: GoogleFonts.josefinSans(
-              //       color: Colors.black87,
-              //       fontSize: 16,
-              //     ),
-              //     filled: true,
-              //     fillColor: const Color(0xffb8e4fc),
-              //   ),
-              //   keyboardType: TextInputType.text,
-              // ),
               const Padding(padding: EdgeInsets.all(10)),
               TextFormField(
                 controller: storePhoneNumberController,
@@ -364,7 +350,6 @@ class _RegistrationState extends State<Registration> {
                 if (_validateForm()) {
                   try {
                     if (registrationType == 1) {
-                      // User registration logic
                       final result = await RegisterUserService().registerUser(
                         userName: userNameController.text,
                         dob: dob!,
@@ -372,13 +357,10 @@ class _RegistrationState extends State<Registration> {
                         phoneNumber: phoneNumberController.text,
                         password: passwordController.text,
                       );
-                      // Handle result accordingly
                       if (result != null) {
                         print(result.userId);
-                        // User registration successful, you can navigate to another screen or perform additional actions.
                         _showMessage("User registered successfully!");
                       } else {
-                        // User registration failed
                         _showMessage("User registration failed");
                       }
                     } else if (registrationType == 2) {
@@ -391,18 +373,14 @@ class _RegistrationState extends State<Registration> {
                         password: passwordController.text,
                       );
 
-                      // Handle result accordingly
                       if (result != null) {
                         print(result.storeId);
-                        // Store registration successful, you can navigate to another screen or perform additional actions.
                         _showMessage("Store registered successfully!");
                       } else {
-                        // Store registration failed
                         _showMessage("Store registration failed!");
                       }
                     }
                   } catch (e) {
-                    // Handle errors if any
                     print('Error during registration: $e');
                     _showMessage(
                         "An error occurred during registration. Please try again.");

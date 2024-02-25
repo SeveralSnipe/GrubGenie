@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:grub_genie/Api code/service/updateitem_service.dart';
+import 'package:grub_genie/Api code/service/storeitems_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class FoodItemUpdate extends StatefulWidget {
   const FoodItemUpdate({Key? key}) : super(key: key);
@@ -17,10 +19,12 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
   TextEditingController itemNameController = TextEditingController();
   TextEditingController stockQuantityController = TextEditingController();
 
+  String? selectedStore;
+  String? selectedItem;
+
   @override
   void initState() {
     super.initState();
-    // Fetch the existing item details using the itemId and populate the fields
     fetchItemDetails();
   }
 

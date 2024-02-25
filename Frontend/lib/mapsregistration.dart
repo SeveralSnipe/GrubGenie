@@ -62,7 +62,7 @@ class _MapPageState extends State<MapPage> {
     return isLoaded
         ? Scaffold(
             appBar: AppBar(
-              title: const Text('Mark store location'),
+              title: const Text('Mark location'),
             ),
             body: GoogleMap(
               onMapCreated: _onMapCreated,
