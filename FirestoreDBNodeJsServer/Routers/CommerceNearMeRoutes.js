@@ -8,6 +8,20 @@ CommerceNearMeRouter.use(bodyParser.json());
 //GET ROUTES
 
 //Response is { result : [ { store details1},{}]} so do map function or forEach loop on data.result
+CommerceNearMeRouter.get("/StoreItems/:storeId", async (req, res) => {
+  try {
+    const storeId = req.params.storeId;
+    const snapshot = await db.collection("ItemDetails").where("StoreId", "==", storeId).get();
+    const items = snapshot.docs.map(doc => doc.data());
+
+    res.status(200).json({ "results":items });
+
+  } catch (error) {
+    console.error("Error retrieving items for store:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 CommerceNearMeRouter.get("/AllStores", async (req, res) => {
   try {
     const snapshot = await db.collection("StoreDetails").get();
