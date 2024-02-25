@@ -50,101 +50,104 @@ class _UserHomeState extends State<UserHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          alignment: Alignment.center,
-          color: Colors.lightBlue,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "$greetingMessage $username!",
-                  style: GoogleFonts.oswald(color: Colors.black, fontSize: 40),
-                ),
-                const Padding(padding: EdgeInsets.all(30)),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        child: const FoodList(),
-                        type: PageTransitionType.rightToLeft,
-                        duration: const Duration(milliseconds: 700),
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            color: Colors.lightBlue,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "$greetingMessage $username!",
+                    style:
+                        GoogleFonts.oswald(color: Colors.black, fontSize: 40),
+                  ),
+                  const Padding(padding: EdgeInsets.all(30)),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: const FoodList(),
+                          type: PageTransitionType.rightToLeft,
+                          duration: const Duration(milliseconds: 700),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.green.shade300),
+                    ),
+                    child: Text(
+                      "Food Near Me",
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
                       ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.green.shade300),
-                  ),
-                  child: Text(
-                    "Food Near Me",
-                    style: GoogleFonts.josefinSans(
-                      color: Colors.black87,
-                      fontSize: 16,
                     ),
                   ),
-                ),
-                const Padding(padding: EdgeInsets.all(5)),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        child: const RequestFood(),
-                        type: PageTransitionType.rightToLeft,
-                        duration: const Duration(milliseconds: 700),
+                  const Padding(padding: EdgeInsets.all(5)),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: const RequestFood(),
+                          type: PageTransitionType.rightToLeft,
+                          duration: const Duration(milliseconds: 700),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.green.shade300),
+                    ),
+                    child: Text(
+                      "Request Food",
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
                       ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.green.shade300),
-                  ),
-                  child: Text(
-                    "Request Food",
-                    style: GoogleFonts.josefinSans(
-                      color: Colors.black87,
-                      fontSize: 16,
                     ),
                   ),
-                ),
-                const Padding(padding: EdgeInsets.all(30)),
-                ElevatedButton(
-                  onPressed: () async {
-                    await _secureStorage.delete(key: 'token');
-                    await _secureStorage.delete(key: 'userId');
-                    await _secureStorage.delete(key: 'userName');
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.red.shade300),
-                  ),
-                  child: Text(
-                    "Sign Out",
-                    style: GoogleFonts.josefinSans(
-                      color: Colors.black87,
-                      fontSize: 16,
+                  const Padding(padding: EdgeInsets.all(30)),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await _secureStorage.delete(key: 'token');
+                      await _secureStorage.delete(key: 'userId');
+                      await _secureStorage.delete(key: 'userName');
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.red.shade300),
+                    ),
+                    child: Text(
+                      "Sign Out",
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        ChatbotButton(
-          onPressed: () {
-            setState(() {
-              isChatbotMinimized = !isChatbotMinimized;
-            });
-          },
-        ),
-      ],
+          ChatbotButton(
+            onPressed: () {
+              setState(() {
+                isChatbotMinimized = !isChatbotMinimized;
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }

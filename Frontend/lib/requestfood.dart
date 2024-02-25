@@ -31,7 +31,7 @@ class _RequestFoodState extends State<RequestFood> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Request Food"),
-        backgroundColor: const Color(0xfffb8e4fc),
+        backgroundColor: const Color(0xffb8e4fc),
       ),
       body: Stack(alignment: Alignment.center, children: [
         Container(
@@ -48,7 +48,7 @@ class _RequestFoodState extends State<RequestFood> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     inputDecorationTheme: InputDecorationTheme(
                       filled: true,
-                      fillColor: const Color(0xfffb8e4fc),
+                      fillColor: const Color(0xffb8e4fc),
                     ),
                     initialSelection: selectedFoodItem,
                     label: Text(
@@ -184,7 +184,7 @@ class _RequestFoodState extends State<RequestFood> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: const Color(0xfffb8e4fc)),
+                        fillColor: const Color(0xffb8e4fc)),
                     maxLines: 3,
                     onChanged: (value) {
                       setState(() {
@@ -201,7 +201,7 @@ class _RequestFoodState extends State<RequestFood> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: const Color(0xfffb8e4fc)),
+                        fillColor: const Color(0xffb8e4fc)),
                     onChanged: (value) {
                       setState(() {
                         location = value;
@@ -217,7 +217,7 @@ class _RequestFoodState extends State<RequestFood> {
                         fontSize: 16,
                       ),
                       filled: true,
-                      fillColor: const Color(0xfffb8e4fc),
+                      fillColor: const Color(0xffb8e4fc),
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {

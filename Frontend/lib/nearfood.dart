@@ -103,7 +103,7 @@ class _FoodListState extends State<FoodList> {
                 builder: (context, myFoodProvider, child) {
               return Scaffold(
                   appBar: EasySearchBar(
-                      backgroundColor: const Color(0xfffb8e4fc),
+                      backgroundColor: const Color(0xffb8e4fc),
                       foregroundColor: Colors.black,
                       title: const Text('Search'),
                       onSearch: (value) {

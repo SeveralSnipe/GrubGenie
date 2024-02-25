@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
             return Container(
                 alignment: Alignment.center,
                 color: Colors.lightBlue,
-                child: const Home());
+                child: const NewHome());
           default:
             return const Center(
               child: CircularProgressIndicator(),

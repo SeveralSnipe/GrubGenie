@@ -82,7 +82,7 @@ class _LoginState extends State<Login> {
                       fontSize: 16,
                     ),
                     filled: true,
-                    fillColor: const Color(0xfffb8e4fc),
+                    fillColor: const Color(0xffb8e4fc),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                       fontSize: 16,
                     ),
                     filled: true,
-                    fillColor: const Color(0xfffb8e4fc),
+                    fillColor: const Color(0xffb8e4fc),
                   ),
                   obscureText: true,
                 ),
@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
                             key: 'userName',
                             value: result.userName,
                           );
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             PageTransition(
                               child: const UserHome(),
@@ -156,7 +156,7 @@ class _LoginState extends State<Login> {
                             key: 'storeName',
                             value: result.storeName,
                           );
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             PageTransition(
                               child: const StoreHome(),
