@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grub_genie/Api%20code/service/requestfood_service.dart';
+import 'package:grub_genie/Api%20code/service/unmappedrequest_service.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'chatbot_button.dart';
@@ -15,11 +18,12 @@ class RequestFood extends StatefulWidget {
 class _RequestFoodState extends State<RequestFood> {
   String? selectedFoodItem = '';
   int quantity = 1;
-  DateTime? preferredExpirationDate;
+  double preferredPrice = 0;
   String additionalNotes = '';
   String location = '';
-  double maxDistance = 0.0;
-  var mapResult = [0.0, 0.0];
+  String username = '';
+  List<double> mapResult = [0.0, 0.0];
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -33,6 +37,20 @@ class _RequestFoodState extends State<RequestFood> {
       ),
     );
     mapResult = temp;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadUsername();
+  }
+
+  void _loadUsername() async {
+    String? storedUsername = await _secureStorage.read(key: 'userName');
+    setState(() {
+      username = storedUsername ?? 'User';
+    });
   }
 
   @override
@@ -72,6 +90,42 @@ class _RequestFoodState extends State<RequestFood> {
                   const Padding(padding: EdgeInsets.all(10)),
                   TextFormField(
                     decoration: InputDecoration(
+                        labelText: 'Preferred Price',
+                        labelStyle: GoogleFonts.josefinSans(
+                          color: Colors.black87,
+                          fontSize: 16,
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xffb8e4fc)),
+                    maxLines: 3,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      setState(() {
+                        preferredPrice = value as double;
+                      });
+                    },
+                  ),
+                  const Padding(padding: EdgeInsets.all(10)),
+                  TextFormField(
+                    decoration: InputDecoration(
+                        labelText: 'Quantity',
+                        labelStyle: GoogleFonts.josefinSans(
+                          color: Colors.black87,
+                          fontSize: 16,
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xffb8e4fc)),
+                    maxLines: 3,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      setState(() {
+                        quantity = value as int;
+                      });
+                    },
+                  ),
+                  const Padding(padding: EdgeInsets.all(10)),
+                  TextFormField(
+                    decoration: InputDecoration(
                         labelText: 'Additional Notes',
                         labelStyle: GoogleFonts.josefinSans(
                           color: Colors.black87,
@@ -102,24 +156,6 @@ class _RequestFoodState extends State<RequestFood> {
                         fontSize: 16,
                       ),
                     ),
-                  ),
-                  const Padding(padding: EdgeInsets.all(10)),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Max Distance (in km)',
-                      labelStyle: GoogleFonts.josefinSans(
-                        color: Colors.black87,
-                        fontSize: 16,
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xffb8e4fc),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      setState(() {
-                        maxDistance = double.tryParse(value) ?? 0.0;
-                      });
-                    },
                   ),
                   const Padding(padding: EdgeInsets.all(20)),
                   ElevatedButton(
@@ -200,8 +236,20 @@ class _RequestFoodState extends State<RequestFood> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
+              onPressed: () async {
+                final result = await UnmappedRequestFoodService()
+                    .submitUnmappedRequest(
+                        location: mapResult,
+                        userId: username,
+                        item: {
+                          "ItemName": selectedFoodItem,
+                          "ItemQuantity": quantity
+                        },
+                        preferedPrice: preferredPrice,
+                        additionalNotes: [additionalNotes]);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
               },
               style: ButtonStyle(
                 backgroundColor:

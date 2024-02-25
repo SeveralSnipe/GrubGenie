@@ -21,7 +21,7 @@ class UnmappedRequestApi {
     };
 
     var body = jsonEncode(data);
-    var uri = Uri.parse('http://10.0.2.2:5000/UMRequest');
+    var uri = Uri.parse('http://10.0.2.2:5000/UnMappedRouter/UMRequest');
     var client = http.Client();
 
     var response = await client.post(
@@ -35,6 +35,8 @@ class UnmappedRequestApi {
       print('Got successful response');
       return unmappedRequestFromJson(
           const Utf8Decoder().convert(response.bodyBytes));
+    } else {
+      print(response.statusCode);
     }
     return null;
   }
