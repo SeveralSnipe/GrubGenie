@@ -1,119 +1,104 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:grub_genie/nearfood.dart';
-import 'package:grub_genie/requestfood.dart';
 import 'package:grub_genie/login.dart';
 import 'package:grub_genie/registration.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class NewHome extends StatefulWidget {
+  const NewHome({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<NewHome> createState() => _NewHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _NewHomeState extends State<NewHome> {
+  late PageController _pageController;
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "GrubGenie",
-          style: GoogleFonts.oswald(color: Colors.black, fontSize: 40),
-        ),
-        const Padding(padding: EdgeInsets.all(30)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    child: const FoodList(),
-                    type: PageTransitionType.rightToLeft,
-                    duration: const Duration(milliseconds: 700)));
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Food Near Me",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            color: Colors.lightBlue, // Set the background color here
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 50.0), // Adjust top padding as needed
+                  child: Text(
+                    "GrubGenie",
+                    style:
+                        GoogleFonts.oswald(color: Colors.black, fontSize: 40),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                _buildSlider(),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentPage = index;
+                      });
+                    },
+                    children: [
+                      _buildPage(const Login()),
+                      _buildPage(const Registration()),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-        const Padding(padding: EdgeInsets.all(5)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: const RequestFood(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 700),
-              ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Request Food",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const Padding(padding: EdgeInsets.all(5)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: const Login(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 700),
-              ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Login",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const Padding(padding: EdgeInsets.all(5)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: const Registration(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 700),
-              ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
-          ),
-          child: Text(
-            "Registration",
-            style: GoogleFonts.josefinSans(
-              color: Colors.black87,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPage(StatefulWidget page) {
+    return page;
+  }
+
+  Widget _buildSlider() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildIndicator(0),
+          const SizedBox(width: 10),
+          _buildIndicator(1),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIndicator(int pageIndex) {
+    return Container(
+      width: 10.0,
+      height: 10.0,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        shape: BoxShape.circle,
+        color: pageIndex == _currentPage
+            ? const Color(0xffb8e4fc)
+            : Colors.transparent,
+      ),
     );
   }
 }

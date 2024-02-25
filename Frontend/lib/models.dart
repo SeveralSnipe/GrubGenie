@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:grub_genie/Api%20code/service/chatbot_service.dart';
+import 'package:grub_genie/message.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'foodcard.dart';
 
 class NearFoodProvider extends ChangeNotifier {
-  final List<FoodCard> totalCardList = [
-    const FoodCard(
-        item: 'Maggi Masala 1-Pack',
-        price: 10,
-        store: 'Pazhamudhir Nilayam',
-        expiry: '30/1/2024',
-        mrp: 20),
-    const FoodCard(
-        item: 'iD Chapati 350g',
-        price: 50,
-        store: 'Nilgiris',
-        expiry: '30/1/2024',
-        mrp: 75)
-  ];
-  late List<Widget> cardList;
+  late List<FoodCard> totalCardList;
+  late List<FoodCard> cardList;
 
-  NearFoodProvider() {
+  NearFoodProvider(this.totalCardList) {
     cardList = List.from(totalCardList);
   }
 
@@ -35,6 +26,35 @@ class NearFoodProvider extends ChangeNotifier {
         cardList.add(result);
       }
     }
+    notifyListeners();
+  }
+}
+
+class ChatbotProvider extends ChangeNotifier {
+  List<Message> messages = [];
+
+  Future<void> sendMessage(String message, String userId) async {
+    messages.add(Message(
+        content: Text(message,
+            style: GoogleFonts.josefinSans(
+              color: Colors.black87,
+              fontSize: 16,
+            )),
+        sentByMe: true));
+    messages.add(Message(
+        content: LoadingAnimationWidget.twistingDots(
+            leftDotColor: Colors.cyan, rightDotColor: Colors.cyan, size: 20),
+        sentByMe: false));
+    notifyListeners();
+    var chatbotResponse = await ChatbotService().getChatbot(message, userId);
+    messages.removeLast();
+    messages.add(Message(
+        content: Text(chatbotResponse!.response,
+            style: GoogleFonts.josefinSans(
+              color: Colors.black87,
+              fontSize: 16,
+            )),
+        sentByMe: false));
     notifyListeners();
   }
 }
