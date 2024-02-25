@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final unmappedRequest = unmappedRequestFromJson(jsonString);
-
 import 'dart:convert';
 
 UnmappedRequest unmappedRequestFromJson(String str) =>

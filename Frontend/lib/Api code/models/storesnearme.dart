@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final storesNearMe = storesNearMeFromJson(jsonString);
-
 import 'dart:convert';
 
 StoresNearMe storesNearMeFromJson(String str) =>

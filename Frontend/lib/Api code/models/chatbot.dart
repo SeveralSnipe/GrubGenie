@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final chatbot = chatbotFromJson(jsonString);
-
 import 'dart:convert';
 
 Chatbot chatbotFromJson(String str) => Chatbot.fromJson(json.decode(str));

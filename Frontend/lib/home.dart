@@ -33,13 +33,12 @@ class _NewHomeState extends State<NewHome> {
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            color: Colors.lightBlue, // Set the background color here
+            color: Colors.lightBlue,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 50.0), // Adjust top padding as needed
+                  padding: const EdgeInsets.only(top: 50.0),
                   child: Text(
                     "GrubGenie",
                     style:

@@ -9,21 +9,6 @@ import 'Api code/service/nearfood_service.dart';
 import 'chatbot_button.dart';
 import 'foodcard.dart';
 
-// List<Widget> cardList = [
-//   const FoodCard(
-//       item: 'Maggi Masala 1-Pack',
-//       price: 10,
-//       store: 'Pazhamudhir Nilayam',
-//       expiry: '30/1/2024',
-//       mrp: 20),
-//   const FoodCard(
-//       item: 'iD Chapati 350g',
-//       price: 50,
-//       store: 'Nilgiris',
-//       expiry: '30/1/2024',
-//       mrp: 75)
-// ];
-
 class FoodList extends StatefulWidget {
   const FoodList({super.key});
 
@@ -32,18 +17,6 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodListState extends State<FoodList> {
-  // late LocationPermission permission;
-  // Position currentPosition = Position(
-  //     longitude: 0,
-  //     latitude: 1,
-  //     timestamp: DateTime(0),
-  //     accuracy: 0,
-  //     altitude: 0,
-  //     altitudeAccuracy: 0,
-  //     heading: 0,
-  //     headingAccuracy: 0,
-  //     speed: 0,
-  //     speedAccuracy: 0);
   NearFood? nearFood;
   bool isLoaded = false;
   List<FoodCard> cardList = [];
@@ -55,24 +28,6 @@ class _FoodListState extends State<FoodList> {
   }
 
   Future<void> loadNearFood() async {
-    // permission = await Geolocator.checkPermission();
-    // if (permission == LocationPermission.denied) {
-    //   permission = await Geolocator.requestPermission();
-    //   if (permission == LocationPermission.denied) {
-    //     return Future.error('Location permissions are denied');
-    //   }
-    // }
-    // Geolocator.getCurrentPosition(
-    //         desiredAccuracy: LocationAccuracy.best,
-    //         forceAndroidLocationManager: true)
-    //     .then((Position position) {
-    //   setState(() {
-    //     currentPosition = position;
-    //   });
-    // }).catchError((e) {
-    //   print(e);
-    // });
-    // print(currentPosition.latitude);
     final nearFoodService = NearFoodService();
     nearFood = await nearFoodService.getNearFood();
     for (var result in nearFood!.result) {
@@ -121,8 +76,6 @@ class _FoodListState extends State<FoodList> {
                             }))),
                     ChatbotButton(
                       onPressed: () {
-                        // Handle the chatbot button press
-                        // You can implement the logic to open/minimize the chatbot here
                       },
                     ),
                   ]));

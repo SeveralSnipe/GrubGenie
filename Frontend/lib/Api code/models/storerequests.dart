@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final storeRequests = storeRequestsFromJson(jsonString);
-
 import 'dart:convert';
 
 StoreRequests storeRequestsFromJson(String str) =>
@@ -48,7 +44,6 @@ class Result {
   });
 
   factory Result.fromJson(Map<String, dynamic> json) {
-    // Explicitly cast the 'orders' field to Map<String, Map<String, int>>
     Map<String, dynamic> rawOrders = json["Orders"];
     Map<String, Map<String, int>> orders = {};
 

@@ -193,7 +193,6 @@ class _FoodItemRegistrationState extends State<FoodItemRegistration> {
 
                         if (result != null) {
                           _showMessage('Food Item registered successfully!');
-                          // Optionally, you can navigate to another screen or perform other actions
                         } else {
                           _showMessage(
                               'Failed to register Food Item. Please try again.');

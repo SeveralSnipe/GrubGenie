@@ -23,7 +23,7 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController storePhoneNumberController =
       TextEditingController();
   final TextEditingController storeNameController = TextEditingController();
-  int registrationType = 1; // 1 for user, 2 for store
+  int registrationType = 1;
   String? dob;
   var mapResult = [0.0, 0.0];
 
@@ -85,7 +85,6 @@ class _RegistrationState extends State<Registration> {
     }
 
     if (registrationType == 1) {
-      // User registration fields validation
       if (dob == null) {
         _showMessage("Please select Date of Birth");
         return false;
@@ -101,7 +100,6 @@ class _RegistrationState extends State<Registration> {
         return false;
       }
     } else if (registrationType == 2) {
-      // Store registration fields validation
       if (_validateText(gstController.text, 'GST') != null) {
         _showMessage(_validateText(gstController.text, 'GST')!);
         return false;
@@ -193,7 +191,6 @@ class _RegistrationState extends State<Registration> {
             ),
             const Padding(padding: EdgeInsets.all(10)),
 
-            // Email and password fields
             TextFormField(
               controller: emailController,
               decoration: InputDecoration(
@@ -222,7 +219,6 @@ class _RegistrationState extends State<Registration> {
               obscureText: true,
             ),
             const Padding(padding: EdgeInsets.all(10)),
-            // User registration fields
             if (registrationType == 1) ...[
               ElevatedButton(
                 onPressed: () async {
@@ -283,7 +279,6 @@ class _RegistrationState extends State<Registration> {
                 keyboardType: TextInputType.text,
               ),
             ],
-            // Store registration fields
             if (registrationType == 2) ...[
               TextFormField(
                 controller: gstController,
@@ -381,7 +376,6 @@ class _RegistrationState extends State<Registration> {
                       }
                     }
                   } catch (e) {
-                    // Handle errors if any
                     print('Error during registration: $e');
                     _showMessage(
                         "An error occurred during registration. Please try again.");

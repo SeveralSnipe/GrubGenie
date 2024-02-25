@@ -282,7 +282,6 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
 
                         if (result != null) {
                           _showMessage('Food Item updated successfully!');
-                          // Optionally, you can navigate to another screen or perform other actions
                         } else {
                           _showMessage(
                               'Failed to update Food Item. Please try again.');

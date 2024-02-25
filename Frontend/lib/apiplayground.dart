@@ -62,24 +62,3 @@ class _ApiTestState extends State<ApiTest> {
             : const CircularProgressIndicator());
   }
 }
-// ListView.builder(
-//                   shrinkWrap: true,
-//                   itemCount: nearFood!.length,
-//                   itemBuilder: (context, index) {
-//                     Timestamp expiryTimestamp = Timestamp(
-//                         nearFood![index].items[0].expiryDate.seconds,
-//                         nearFood![index].items[0].expiryDate.nanoseconds);
-//                     String expiryDate =
-//                         Jiffy.parseFromDateTime(expiryTimestamp.toDate())
-//                             .yMMMMd;
-//                     return Padding(
-//                       padding: const EdgeInsets.all(8),
-//                       child: FoodCard(
-//                           item: nearFood![index].items[0].itemName,
-//                           price: 349,
-//                           store: nearFood![index].store.storeName,
-//                           expiry: expiryDate,
-//                           mrp: nearFood![index].items[0].itemMrp),
-//                     );
-//                   },
-//                 ),

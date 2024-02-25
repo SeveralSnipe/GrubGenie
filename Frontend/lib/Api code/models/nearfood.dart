@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final nearFood = nearFoodFromJson(jsonString);
-
 import 'dart:convert';
 
 NearFood nearFoodFromJson(String str) => NearFood.fromJson(json.decode(str));

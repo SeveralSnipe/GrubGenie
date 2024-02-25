@@ -27,13 +27,11 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _submitLocation() {
-    // You can now use _markerLatLng.latitude and _markerLatLng.longitude for further processing.
     Navigator.pop(context, [_markerLatLng.latitude, _markerLatLng.longitude]);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getLocation();
   }

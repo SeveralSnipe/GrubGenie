@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:grub_genie/Api%20code/service/userrequests_service.dart'; // Update with the correct path
-import 'package:grub_genie/Api%20code/models/userrequests.dart'; // Update with the correct path
+import 'package:grub_genie/Api%20code/service/userrequests_service.dart';
+import 'package:grub_genie/Api%20code/models/userrequests.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserRequestsScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class _UserRequestsScreenState extends State<UserRequestsScreen> {
   String? selectedUserId;
 
   final UserRequestsService _userRequestsService =
-      UserRequestsService(); // Update with the correct service
+      UserRequestsService();
 
   @override
   void initState() {
