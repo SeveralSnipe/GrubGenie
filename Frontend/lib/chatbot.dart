@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -13,12 +14,28 @@ class Chatbot extends StatefulWidget {
 
 class _ChatbotState extends State<Chatbot> {
   TextEditingController questionController = TextEditingController();
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  late String username;
 
   @override
   void dispose() {
     // TODO: implement dispose
     questionController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadUser();
+  }
+
+  void loadUser() async {
+    String? storedUsername = await _secureStorage.read(key: 'userName');
+    setState(() {
+      username = storedUsername ?? 'User';
+    });
   }
 
   @override
@@ -65,7 +82,7 @@ class _ChatbotState extends State<Chatbot> {
                           hintText: 'How can I help you?'),
                       controller: questionController,
                       onSubmitted: (value) {
-                        myChatbotProvider.sendMessage(value, 'testUser');
+                        myChatbotProvider.sendMessage(value, username);
                         questionController.clear();
                       },
                     ),

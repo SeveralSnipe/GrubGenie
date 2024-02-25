@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grub_genie/Api code/service/registerstore_service.dart';
 import 'package:grub_genie/Api code/service/registeruser_service.dart';
+import 'package:grub_genie/mapsregistration.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController storeNameController = TextEditingController();
   int registrationType = 1; // 1 for user, 2 for store
   String? dob;
+  var mapResult = [0.0, 0.0];
 
   void _showMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -104,10 +107,10 @@ class _RegistrationState extends State<Registration> {
         return false;
       }
 
-      if (_validateText(locationController.text, 'Location') != null) {
-        _showMessage(_validateText(locationController.text, 'Location')!);
-        return false;
-      }
+      // if (_validateText(locationController.text, 'Location') != null) {
+      //   _showMessage(_validateText(locationController.text, 'Location')!);
+      //   return false;
+      // }
 
       if (_validatePhoneNumber(storePhoneNumberController.text) != null) {
         _showMessage(_validatePhoneNumber(storePhoneNumberController.text)!);
@@ -122,6 +125,18 @@ class _RegistrationState extends State<Registration> {
 
     // All checks passed, form is valid
     return true;
+  }
+
+  Future<void> _mapSelect(BuildContext context) async {
+    var temp = await Navigator.push(
+      context,
+      PageTransition(
+        child: MapPage(),
+        type: PageTransitionType.rightToLeft,
+        duration: const Duration(milliseconds: 700),
+      ),
+    );
+    mapResult = temp;
   }
 
   @override
@@ -285,19 +300,35 @@ class _RegistrationState extends State<Registration> {
                 keyboardType: TextInputType.number,
               ),
               const Padding(padding: EdgeInsets.all(10)),
-              TextFormField(
-                controller: locationController,
-                decoration: InputDecoration(
-                  labelText: 'Location',
-                  labelStyle: GoogleFonts.josefinSans(
+              ElevatedButton(
+                onPressed: () {
+                  _mapSelect(context);
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Colors.green.shade300),
+                ),
+                child: Text(
+                  "Mark Location",
+                  style: GoogleFonts.josefinSans(
                     color: Colors.black87,
                     fontSize: 16,
                   ),
-                  filled: true,
-                  fillColor: const Color(0xffb8e4fc),
                 ),
-                keyboardType: TextInputType.text,
               ),
+              // TextFormField(
+              //   controller: locationController,
+              //   decoration: InputDecoration(
+              //     labelText: 'Location',
+              //     labelStyle: GoogleFonts.josefinSans(
+              //       color: Colors.black87,
+              //       fontSize: 16,
+              //     ),
+              //     filled: true,
+              //     fillColor: const Color(0xffb8e4fc),
+              //   ),
+              //   keyboardType: TextInputType.text,
+              // ),
               const Padding(padding: EdgeInsets.all(10)),
               TextFormField(
                 controller: storePhoneNumberController,
@@ -355,7 +386,7 @@ class _RegistrationState extends State<Registration> {
                         storeName: storeNameController.text,
                         gst: gstController.text,
                         email: emailController.text,
-                        location: [13.113715408791111, 80.21668124172232],
+                        location: [mapResult[0], mapResult[1]],
                         phoneNumber: storePhoneNumberController.text,
                         password: passwordController.text,
                       );
