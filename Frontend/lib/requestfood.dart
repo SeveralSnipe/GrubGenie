@@ -45,6 +45,14 @@ class _RequestFoodState extends State<RequestFood> {
     _loadUsername();
   }
 
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
   void _loadUsername() async {
     String? storedUsername = await _secureStorage.read(key: 'userName');
     setState(() {
@@ -246,6 +254,12 @@ class _RequestFoodState extends State<RequestFood> {
                         },
                         preferedPrice: preferredPrice,
                         additionalNotes: [additionalNotes]);
+                if (result != null) {
+                  print(result.message);
+                  _showMessage("Request has been made successfully!");
+                } else {
+                  _showMessage("Request failed!");
+                }
                 if (context.mounted) {
                   Navigator.pop(context);
                 }
