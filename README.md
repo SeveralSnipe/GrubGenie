@@ -51,6 +51,11 @@ Quantifiable data collected through user surveys and feedback mechanisms validat
 
 ![Alt Text](./ReadMe/giphy.gif)
 
+## Survey Results
+![Alt Text](./ReadMe/1gsc.png) ![Alt Text](./ReadMe/2gsc.png)
+![Alt Text](./ReadMe/3gsc.png) ![Alt Text](./ReadMe/4gsc.png)
+![Alt Text](./ReadMe/5gsc.png) ![Alt Text](./ReadMe/6gsc.png)
+![Alt Text](./ReadMe/7gsc.png) ![Alt Text](./ReadMe/8gsc.png)
 ## How to run the Program 
 ### NodeJs Server
 - **cd FirestoreDBNodeJsServer**
@@ -61,3 +66,5 @@ Quantifiable data collected through user surveys and feedback mechanisms validat
 - **cd FlaskApis**
 - run **pip install Flask PyPDF2 langchain firebase-admin reportlab requests**
 - run **python -m flask run -p 6000**
+
+
