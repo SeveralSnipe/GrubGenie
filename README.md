@@ -50,3 +50,9 @@ Quantifiable data collected through user surveys and feedback mechanisms validat
 - **Partnerships:** Collaborating with startups and government agencies to increase awareness and reach underserved communities.
 
 ![Alt Text](./ReadMe/giphy.gif)
+
+## How to run the Program 
+### NodeJs Server
+- **cd FirestoreDBNodeJsServer**
+- run **npm i** to install all the packages
+- **nodemon server.js** to spin up the server at localhost in port 5000
