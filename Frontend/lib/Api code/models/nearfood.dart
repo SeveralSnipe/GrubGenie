@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final nearFood = nearFoodFromJson(jsonString);
-
 import 'dart:convert';
 
 NearFood nearFoodFromJson(String str) => NearFood.fromJson(json.decode(str));
@@ -28,14 +24,14 @@ class NearFood {
 class Result {
   String storeId;
   String storeName;
-  int? gstNo;
-  int? phoneNumber;
+  var gstNo;
+  var phoneNumber;
   String? resultEmail;
   Location location;
   List<Item> items;
   double distance;
   String? email;
-  int? gst;
+  var gst;
 
   Result({
     required this.storeId,

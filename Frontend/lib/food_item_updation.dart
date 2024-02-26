@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:grub_genie/Api code/service/updateitem_service.dart';
 import 'package:grub_genie/Api code/service/storeitems_service.dart';
+import 'package:grub_genie/Api code/models/storeitems.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class FoodItemUpdate extends StatefulWidget {
@@ -19,29 +20,25 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
   TextEditingController itemNameController = TextEditingController();
   TextEditingController stockQuantityController = TextEditingController();
 
-  String? selectedStore;
-  String? selectedItem;
+  String? selectedStoreId;
+  String? selectedItemId;
+
+  final secureStorage = FlutterSecureStorage();
 
   @override
   void initState() {
     super.initState();
-    fetchItemDetails();
+    fetchStoreId();
   }
 
-  Future<void> fetchItemDetails() async {
-    // TODO: Implement a method to fetch existing item details based on itemId
-    // Set the values in the respective controllers
-    // Example:
-    // final itemDetails = await YourItemDetailsService().getItemDetails(widget.itemId);
-    // if (itemDetails != null) {
-    //   setState(() {
-    //     expiryDate = itemDetails.expiryDate;
-    //     itemMRPController.text = itemDetails.itemMRP.toString();
-    //     itemSPController.text = itemDetails.itemSP.toString();
-    //     itemNameController.text = itemDetails.itemName;
-    //     stockQuantityController.text = itemDetails.stockQuantity.toString();
-    //   });
-    // }
+  Future<void> fetchStoreId() async {
+    final storedStoreId = await secureStorage.read(key: 'storeId');
+    print(storedStoreId);
+    if (storedStoreId != null) {
+      setState(() {
+        selectedStoreId = storedStoreId;
+      });
+    }
   }
 
   @override
@@ -77,6 +74,74 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                FutureBuilder<StoreItems?>(
+                  future: StoreItemsService().getStoreItems(
+                    storeId: selectedStoreId ?? '',
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.red.shade300),
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: GoogleFonts.josefinSans(
+                            color: Colors.black87,
+                            fontSize: 16,
+                          ),
+                        ),
+                      );
+                    } else if (!snapshot.hasData ||
+                        snapshot.data!.results.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No items found for the selected store',
+                          style: GoogleFonts.josefinSans(
+                            color: Colors.black87,
+                            fontSize: 16,
+                          ),
+                        ),
+                      );
+                    } else {
+                      List<DropdownMenuItem<String>> dropdownItems =
+                          snapshot.data!.results.map((item) {
+                        return DropdownMenuItem<String>(
+                          value: item.itemId,
+                          child: Text(
+                            item.itemName,
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.black87,
+                              fontSize: 16,
+                            ),
+                          ),
+                        );
+                      }).toList();
+
+                      return DropdownButton<String>(
+                        value: selectedItemId,
+                        hint: Text(
+                          'Select Existing Item',
+                          style: GoogleFonts.josefinSans(
+                            color: Colors.black87,
+                            fontSize: 16,
+                          ),
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedItemId = newValue;
+                            print(selectedItemId);
+                          });
+                        },
+                        items: dropdownItems,
+                      );
+                    }
+                  },
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     DateTime? pickedDate = await showDatePicker(
@@ -200,12 +265,13 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
                   onPressed: () async {
                     try {
                       if (expiryDate != null &&
+                          selectedItemId != null &&
                           itemMRPController.text.isNotEmpty &&
                           itemSPController.text.isNotEmpty &&
                           itemNameController.text.isNotEmpty &&
                           stockQuantityController.text.isNotEmpty) {
                         final result = await UpdateItemService().updateItem(
-                          itemId: "1234",
+                          itemId: selectedItemId ?? '',
                           expiryDate: expiryDate!,
                           itemMRP: double.parse(itemMRPController.text),
                           itemSP: double.parse(itemSPController.text),
@@ -216,7 +282,6 @@ class _FoodItemUpdateState extends State<FoodItemUpdate> {
 
                         if (result != null) {
                           _showMessage('Food Item updated successfully!');
-                          // Optionally, you can navigate to another screen or perform other actions
                         } else {
                           _showMessage(
                               'Failed to update Food Item. Please try again.');

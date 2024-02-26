@@ -1,7 +1,7 @@
 import 'package:grub_genie/Api code/providers/unmappedrequest_api.dart';
 import 'package:grub_genie/Api code/models/unmappedrequest.dart';
 
-class RequestFoodService {
+class UnmappedRequestFoodService {
   final _api = UnmappedRequestApi();
 
   Future<UnmappedRequest?> submitUnmappedRequest({

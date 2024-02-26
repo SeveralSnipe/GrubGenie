@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final storeLogin = storeLoginFromJson(jsonString);
-
 import 'dart:convert';
 
 StoreLogin storeLoginFromJson(String str) =>

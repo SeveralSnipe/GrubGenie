@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final storeItems = storeItemsFromJson(jsonString);
-
 import 'dart:convert';
 
 StoreItems storeItemsFromJson(String str) =>

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final updateItem = updateItemFromJson(jsonString);
-
 import 'dart:convert';
 
 UpdateItem updateItemFromJson(String str) =>

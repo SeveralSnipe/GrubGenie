@@ -19,14 +19,12 @@ class _ChatbotState extends State<Chatbot> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     questionController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadUser();
   }

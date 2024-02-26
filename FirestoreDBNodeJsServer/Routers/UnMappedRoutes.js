@@ -27,7 +27,7 @@ UnMappedRouter.post("/UMRequest", async (req, res) => {
           PreferedPrice: requestData.PreferedPrice,
           AgreedPrice: requestData.AgreedPrice || 0,
           Status: 'Not Claimed',
-          AdditionalNotes: [requestData.AdditionalNotes] || []
+          AdditionalNotes: requestData.AdditionalNotes || []
         };
         console.log(data)
         await requestRef.set(data);
