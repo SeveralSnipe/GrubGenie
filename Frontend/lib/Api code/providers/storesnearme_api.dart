@@ -10,7 +10,7 @@ class StoreNearMeDistApi {
   }) async {
     Map<String, dynamic> data = {
       "sorts": sorts,
-      "Location": location,
+      "location": location,
       "maxDist": maxDist,
     };
 
@@ -28,8 +28,9 @@ class StoreNearMeDistApi {
     print('Got response');
     if (response.statusCode == 200) {
       print('Got successful response');
-      List<dynamic> jsonList =
-          jsonDecode(const Utf8Decoder().convert(response.bodyBytes));
+      List<dynamic> jsonList = [
+        jsonDecode(const Utf8Decoder().convert(response.bodyBytes))
+      ];
 
       List<StoresNearMe> storesNearMe =
           jsonList.map((store) => StoresNearMe.fromJson(store)).toList();

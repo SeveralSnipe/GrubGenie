@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grub_genie/home.dart';
 import 'package:grub_genie/nearfood.dart';
+import 'package:grub_genie/nearstores.dart';
 import 'package:grub_genie/requestfood.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:grub_genie/chatbot_button.dart';
@@ -115,6 +116,30 @@ class _UserHomeState extends State<UserHome> {
                     ),
                     child: Text(
                       "Request Food",
+                      style: GoogleFonts.josefinSans(
+                        color: Colors.black87,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.all(5)),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: const NearStores(),
+                          type: PageTransitionType.rightToLeft,
+                          duration: const Duration(milliseconds: 700),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.green.shade300),
+                    ),
+                    child: Text(
+                      "Nearby Stores",
                       style: GoogleFonts.josefinSans(
                         color: Colors.black87,
                         fontSize: 16,

@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: 'GrubGenie',
     home: MyApp(),
   ));
