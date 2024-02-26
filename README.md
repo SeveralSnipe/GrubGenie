@@ -56,3 +56,8 @@ Quantifiable data collected through user surveys and feedback mechanisms validat
 - **cd FirestoreDBNodeJsServer**
 - run **npm i** to install all the packages
 - **nodemon server.js** to spin up the server at localhost in port 5000
+
+### Flask Server
+- **cd FlaskApis**
+- run **pip install Flask PyPDF2 langchain firebase-admin reportlab requests**
+- run **python -m flask run -p 6000**
