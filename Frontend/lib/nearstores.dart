@@ -58,7 +58,7 @@ class _NearStoresState extends State<NearStores> {
               title: const Text('Nearby Stores'),
             ),
             body: ChangeNotifierProvider(
-              create: (context) => NearStoresProvider(lat, long),
+              create: (context) => NearStoresProvider(lat, long, context),
               child: Consumer<NearStoresProvider>(
                   builder: (context, myStoresProvider, child) {
                 return myStoresProvider.isLoaded
