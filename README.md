@@ -67,4 +67,7 @@ Quantifiable data collected through user surveys and feedback mechanisms validat
 - run **pip install Flask PyPDF2 langchain firebase-admin reportlab requests**
 - run **python -m flask run -p 6000**
 
-
+### Flutter Application
+ - **cd Frontend**
+ - run **flutter pub get**
+ - run **flutter run** when your Android device is connected with USB debugging turned on, or use your emulator with **flutter run -d [Your emulator ID]**  
